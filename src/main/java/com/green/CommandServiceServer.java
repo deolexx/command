@@ -13,9 +13,5 @@ public class CommandServiceServer {
      LOGGER.info("Creating WEB server and publish SOAP endpoint");
         Endpoint.publish("http://localhost:8081/command",new UserServiceImplementation());
 
-
-
-
-
     }
 }
