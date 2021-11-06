@@ -9,6 +9,7 @@ services:
       retries: 10
     restart: always
     environment:
+      - APP_DB_NAME=tasktrack
       - POSTGRES_USER=admin
       - POSTGRES_PASSWORD=admin
     volumes:
