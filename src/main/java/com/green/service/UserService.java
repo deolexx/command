@@ -14,6 +14,9 @@ public interface UserService {
     boolean save(User user);
 
     @WebMethod
+    List<User> findByGroup(String string);
+
+    @WebMethod
     List<User> findAll();
 
     @WebMethod

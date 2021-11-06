@@ -27,6 +27,11 @@ public class UserServiceImplementation implements UserService {
     }
 
     @Override
+    public List<User> findByGroup(String string) {
+        return userDao.findByGroup(string);
+    }
+
+    @Override
     @WebMethod
     public List<User> findAll() {
         return userDao.findAll();
@@ -43,4 +48,5 @@ public class UserServiceImplementation implements UserService {
     public boolean delete(User user) {
         return userDao.delete(user);
     }
+    
 }
