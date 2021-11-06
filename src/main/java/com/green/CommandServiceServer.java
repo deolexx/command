@@ -1,6 +1,7 @@
 package com.green;
 
 import com.green.dao.DBConnection;
+import com.green.service.TestInterfaceImpl;
 import com.green.service.UserServiceImplementation;
 
 import javax.xml.ws.Endpoint;
@@ -11,7 +12,8 @@ public class CommandServiceServer {
 
     public static void main(String[] args) {
      LOGGER.info("Creating WEB server and publish SOAP endpoint");
-        Endpoint.publish("http://localhost:8081/command",new UserServiceImplementation());
+//        Endpoint.publish("http://localhost:8081/command",new UserServiceImplementation());
+        Endpoint.publish("http://localhost:8081/command",new TestInterfaceImpl());
 
     }
 }
