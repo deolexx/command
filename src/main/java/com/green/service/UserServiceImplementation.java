@@ -27,6 +27,11 @@ public class UserServiceImplementation implements UserService {
     }
 
     @Override
+    public List<User> findByGroup(String string) {
+        return userDao.findByGroup(string);
+    }
+
+    @Override
     @WebMethod
     public List<User> findAll() {
         return userDao.findAll();
