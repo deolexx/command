@@ -48,4 +48,5 @@ public class UserServiceImplementation implements UserService {
     public boolean delete(User user) {
         return userDao.delete(user);
     }
+    
 }
