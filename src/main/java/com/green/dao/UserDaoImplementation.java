@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+// TODO: 07.11.2021 cheak all SQL fields names in methods
 public class UserDaoImplementation implements UserDao {
     private static final String DELETE = "DELETE FROM command.user WHERE user_id = ?";
     private static final String SAVE = "INSERT INTO command.user (user_id,username,first_name,last_name,user_role,user_group) VALUES ( ?, ?, ?, ?, ?, ? )";
@@ -23,7 +24,10 @@ public class UserDaoImplementation implements UserDao {
 
     @Override
     public List<User> findAll() {
-        if (connection == null) connection = DBConnection.getConnection();
+       if (connection == null) {
+           connection = DBConnection.getConnection();
+       }
+        System.out.println(connection);
         List<User> users = new ArrayList<>();
 
         PreparedStatement statement;
@@ -31,26 +35,29 @@ public class UserDaoImplementation implements UserDao {
             statement = connection.prepareStatement(FIND_ALL);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
-                int id = resultSet.getInt("id");
+                int id = resultSet.getInt("user_id");
                 String userName = resultSet.getString("username");
-                String firstName = resultSet.getString("firstname");
-                String lastName = resultSet.getString("lastname");
-                String role = resultSet.getString("role");
-                String group = resultSet.getString("group");
+                String firstName = resultSet.getString("first_name");
+                String lastName = resultSet.getString("last_name");
+                String role = resultSet.getString("user_role");
+                String group = resultSet.getString("user_group");
 
                 User user = new User(id, userName, firstName, lastName, role, group);
                 users.add(user);
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
         Collections.sort(users);
-        try {
-            connection.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return users;
+        // connection.close();
+        System.out.println("closed");
+        System.out.println(users.size());
+          return users;
 
 
     }
@@ -184,6 +191,7 @@ public class UserDaoImplementation implements UserDao {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
         return users;
 
     }

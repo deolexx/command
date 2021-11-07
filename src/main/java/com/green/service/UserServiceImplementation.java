@@ -10,43 +10,38 @@ import java.util.List;
 @WebService(endpointInterface = "com.green.service.UserService")
 public class UserServiceImplementation implements UserService {
 
-    private UserDaoImplementation userDao;
+    private static UserDaoImplementation userDaoImplementation = new UserDaoImplementation();
 
     public UserServiceImplementation() {
     }
 
-    public UserServiceImplementation(UserDaoImplementation userDao) {
-        this.userDao = userDao;
-    }
-
-
-    @Override
+      @Override
     @WebMethod
-    public boolean save(User user) {
-        return userDao.save(user);
+    public  boolean save(User user) {
+        return userDaoImplementation.save(user);
     }
 
     @Override
     public List<User> findByGroup(String string) {
-        return userDao.findByGroup(string);
+        return userDaoImplementation.findByGroup(string);
     }
 
     @Override
     @WebMethod
     public List<User> findAll() {
-        return userDao.findAll();
+        return userDaoImplementation.findAll();
     }
 
     @Override
     @WebMethod
     public boolean update(User user) {
-        return userDao.update(user);
+        return userDaoImplementation.update(user);
     }
 
     @Override
     @WebMethod
     public boolean delete(User user) {
-        return userDao.delete(user);
+        return userDaoImplementation.delete(user);
     }
     
 }

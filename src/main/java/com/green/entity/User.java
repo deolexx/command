@@ -1,11 +1,24 @@
 package com.green.entity;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
 public class User implements Comparable<User>{
+    @XmlElement
     private int id;
+    @XmlElement
     private String username;
+    @XmlElement
     private String firstName;
+    @XmlElement
     private String lastName;
+    @XmlElement
     private String role;
+    @XmlElement
     private String group;
 
     public User(int id, String username, String firstName, String lastName, String role, String group) {
@@ -21,7 +34,7 @@ public class User implements Comparable<User>{
     }
 
     public int getId() {
-        return id;
+        return this.id;
     }
 
     public void setId(int id) {
@@ -29,7 +42,7 @@ public class User implements Comparable<User>{
     }
 
     public String getUsername() {
-        return username;
+        return this.username;
     }
 
     public void setUsername(String username) {
@@ -37,7 +50,7 @@ public class User implements Comparable<User>{
     }
 
     public String getFirstName() {
-        return firstName;
+        return this.firstName;
     }
 
     public void setFirstName(String firstName) {
@@ -45,7 +58,7 @@ public class User implements Comparable<User>{
     }
 
     public String getLastName() {
-        return lastName;
+        return this.lastName;
     }
 
     public void setLastName(String lastName) {
@@ -53,7 +66,7 @@ public class User implements Comparable<User>{
     }
 
     public String getRole() {
-        return role;
+        return this.role;
     }
 
     public void setRole(String role) {
@@ -61,7 +74,7 @@ public class User implements Comparable<User>{
     }
 
     public String getGroup() {
-        return group;
+        return this.group;
     }
 
     public void setGroup(String group) {
