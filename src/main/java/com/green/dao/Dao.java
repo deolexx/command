@@ -15,6 +15,8 @@ boolean update(T o);
 
 List<T>findByGroup(String group);
 
+List<T>findByRole(String role);
+
 
 
 

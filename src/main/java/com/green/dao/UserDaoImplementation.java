@@ -16,6 +16,7 @@ public class UserDaoImplementation implements UserDao {
     private static final String UPDATE = "UPDATE command.user SET user_role = ?, user_group = ? WHERE user_id = ?";
     private static final String FIND_ALL = "SELECT * FROM command.user";
     private static final String FIND_BY_GROUP = "SELECT * FROM command.user WHERE user_group = ?";
+    private static final String FIND_BY_ROLE = "SELECT * FROM command.user WHERE user_role = ?";
 
 
     Connection connection = DBConnection.getConnection();
@@ -149,6 +150,41 @@ public class UserDaoImplementation implements UserDao {
         }
         return users;
 
+
+    }
+
+    @Override
+    public List<User> findByRole(String userRole) {
+        if (connection == null) connection = DBConnection.getConnection();
+        List<User> users = new ArrayList<>();
+
+        PreparedStatement statement;
+        try {
+            statement = connection.prepareStatement(FIND_BY_ROLE);
+            statement.setString(1, userRole);
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                int id = resultSet.getInt("id");
+                String userName = resultSet.getString("username");
+                String firstName = resultSet.getString("firstname");
+                String lastName = resultSet.getString("lastname");
+                String role = resultSet.getString("role");
+                String group = resultSet.getString("group");
+
+                User user = new User(id, userName, firstName, lastName, role, group);
+                users.add(user);
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        Collections.sort(users);
+        try {
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return users;
 
     }
 
