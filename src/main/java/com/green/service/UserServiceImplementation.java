@@ -15,15 +15,15 @@ public class UserServiceImplementation implements UserService {
     public UserServiceImplementation() {
     }
 
-      @Override
+    @Override
     @WebMethod
-    public  boolean save(User user) {
+    public boolean save(User user) {
         return userDaoImplementation.save(user);
     }
 
     @Override
-    public List<User> findByGroup(String string) {
-        return userDaoImplementation.findByGroup(string);
+    public List<User> findByGroup(String group) {
+        return userDaoImplementation.findByGroup(group);
     }
 
     @Override
@@ -43,5 +43,11 @@ public class UserServiceImplementation implements UserService {
     public boolean delete(User user) {
         return userDaoImplementation.delete(user);
     }
-    
+
+    @Override
+    @WebMethod
+    public List<User> findByRole(String role) {
+        return userDaoImplementation.findByRole(role);
+    }
+
 }

@@ -24,9 +24,9 @@ public class UserDaoImplementation implements UserDao {
 
     @Override
     public List<User> findAll() {
-       if (connection == null) {
-           connection = DBConnection.getConnection();
-       }
+        if (connection == null) {
+            connection = DBConnection.getConnection();
+        }
         System.out.println(connection);
         List<User> users = new ArrayList<>();
 
@@ -57,14 +57,16 @@ public class UserDaoImplementation implements UserDao {
         // connection.close();
         System.out.println("closed");
         System.out.println(users.size());
-          return users;
+        return users;
 
 
     }
 
     @Override
     public boolean save(User user) {
-        if (connection == null) connection = DBConnection.getConnection();
+        if (connection == null) {
+            connection = DBConnection.getConnection();
+        }
         boolean rowInserted = false;
         try {
             PreparedStatement statement = connection.prepareStatement(SAVE);
@@ -79,13 +81,20 @@ public class UserDaoImplementation implements UserDao {
 
         } catch (SQLException e) {
             e.printStackTrace();
+            try {
+                connection.close();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
         }
         return rowInserted;
     }
 
     @Override
     public boolean delete(User o) {
-        if (connection == null) connection = DBConnection.getConnection();
+        if (connection == null) {
+            connection = DBConnection.getConnection();
+        }
         boolean rowDeleted = false;
 
         try {
@@ -108,7 +117,9 @@ public class UserDaoImplementation implements UserDao {
 
     @Override
     public boolean update(User user) {
-        if (connection == null) connection = DBConnection.getConnection();
+        if (connection == null) {
+            connection = DBConnection.getConnection();
+        }
         boolean rowUpdated = false;
 
         try (PreparedStatement statement = connection.prepareStatement(UPDATE)) {
@@ -119,6 +130,11 @@ public class UserDaoImplementation implements UserDao {
             connection.close();
         } catch (SQLException e) {
             e.printStackTrace();
+            try {
+                connection.close();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
         }
 
         return rowUpdated;
@@ -126,7 +142,9 @@ public class UserDaoImplementation implements UserDao {
 
     @Override
     public List<User> findByGroup(String userGroup) {
-        if (connection == null) connection = DBConnection.getConnection();
+        if (connection == null) {
+            connection = DBConnection.getConnection();
+        }
         List<User> users = new ArrayList<>();
 
         PreparedStatement statement;
@@ -136,12 +154,12 @@ public class UserDaoImplementation implements UserDao {
             ResultSet resultSet = statement.executeQuery();
 
             while (resultSet.next()) {
-                int id = resultSet.getInt("id");
+                int id = resultSet.getInt("user_id");
                 String userName = resultSet.getString("username");
-                String firstName = resultSet.getString("firstname");
-                String lastName = resultSet.getString("lastname");
-                String role = resultSet.getString("role");
-                String group = resultSet.getString("group");
+                String firstName = resultSet.getString("firs_tname");
+                String lastName = resultSet.getString("last_name");
+                String role = resultSet.getString("user_role");
+                String group = resultSet.getString("user_group");
 
                 User user = new User(id, userName, firstName, lastName, role, group);
                 users.add(user);
@@ -162,7 +180,9 @@ public class UserDaoImplementation implements UserDao {
 
     @Override
     public List<User> findByRole(String userRole) {
-        if (connection == null) connection = DBConnection.getConnection();
+        if (connection == null) {
+            connection = DBConnection.getConnection();
+        }
         List<User> users = new ArrayList<>();
 
         PreparedStatement statement;
@@ -172,12 +192,12 @@ public class UserDaoImplementation implements UserDao {
             ResultSet resultSet = statement.executeQuery();
 
             while (resultSet.next()) {
-                int id = resultSet.getInt("id");
+                int id = resultSet.getInt("user_id");
                 String userName = resultSet.getString("username");
-                String firstName = resultSet.getString("firstname");
-                String lastName = resultSet.getString("lastname");
-                String role = resultSet.getString("role");
-                String group = resultSet.getString("group");
+                String firstName = resultSet.getString("first_name");
+                String lastName = resultSet.getString("last_name");
+                String role = resultSet.getString("user_role");
+                String group = resultSet.getString("user_group");
 
                 User user = new User(id, userName, firstName, lastName, role, group);
                 users.add(user);

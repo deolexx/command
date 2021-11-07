@@ -25,6 +25,9 @@ public interface UserService {
     @WebMethod
     boolean delete(User user);
 
+    @WebMethod
+    List<User> findByRole(String string);
+
 }
 
 

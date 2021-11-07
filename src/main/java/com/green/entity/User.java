@@ -7,7 +7,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
-public class User implements Comparable<User>{
+public class User implements Comparable<User> {
     @XmlElement
     private int id;
     @XmlElement
