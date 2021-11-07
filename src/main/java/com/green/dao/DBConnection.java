@@ -8,11 +8,13 @@ import java.sql.SQLException;
 import java.util.Properties;
 
 public class DBConnection {
-    private static String user;
-    private static String password;
-    private static String host;
-    private static String port;
-    private static String database;
+
+    //Settings for  postgres aws db
+    private static String user = "admin";
+    private static String password = "admin";
+    private static String host = "3.13.111.5";
+    private static String port = "5432";
+    private static String database = "tasktrack";
 
     /**
      * Setups DB connection configured in getProperties();
@@ -20,9 +22,9 @@ public class DBConnection {
      * @return - returns connection with database
      */
 
-    public static Connection getConnection()  {
+    public static Connection getConnection() {
         Connection connection = null;
-        getProperties();
+        //getProperties();
         try {
             Class.forName("org.postgresql.Driver");
         } catch (ClassNotFoundException e) {
@@ -46,16 +48,18 @@ public class DBConnection {
     private static void getProperties() {
         try (InputStream input = DBConnection.class.
                 getClassLoader().
-                getResourceAsStream("database.properties")) {
+                getResourceAsStream("connection.properties")) {
 
             Properties prop = new Properties();
 
             if (input == null) {
-                System.out.println("Sorry, unable to find config.properties");}
+                System.out.println("Sorry, unable to find config.properties");
+            }
             //load a properties file from class path, inside static method
             prop.load(input);
             //bind props with reserved strings
             host = prop.getProperty("serverName");
+            System.out.println(host);
             port = prop.getProperty("port");
             database = prop.getProperty("database");
             user = prop.getProperty("user");
