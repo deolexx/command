@@ -18,6 +18,7 @@ public class UserDaoImplementation implements UserDao {
     private static final String FIND_ALL = "SELECT * FROM command.user";
     private static final String FIND_BY_GROUP = "SELECT * FROM command.user WHERE user_group = ?";
     private static final String FIND_BY_ROLE = "SELECT * FROM command.user WHERE user_role = ?";
+    private static final String FIND_BY_ROLE_AND_GROUP = "SELECT * FROM command.user WHERE user_role = ? AND user_group = ?";
 
 
     Connection connection = DBConnection.getConnection();
@@ -156,7 +157,7 @@ public class UserDaoImplementation implements UserDao {
             while (resultSet.next()) {
                 int id = resultSet.getInt("user_id");
                 String userName = resultSet.getString("username");
-                String firstName = resultSet.getString("firs_tname");
+                String firstName = resultSet.getString("first_name");
                 String lastName = resultSet.getString("last_name");
                 String role = resultSet.getString("user_role");
                 String group = resultSet.getString("user_group");
@@ -214,6 +215,44 @@ public class UserDaoImplementation implements UserDao {
 
         return users;
 
+    }
+
+    @Override
+    public List<User> findByRoleAndGroup(String userRole, String userGroup) {
+        if (connection == null) {
+            connection = DBConnection.getConnection();
+        }
+        List<User> users = new ArrayList<>();
+
+        PreparedStatement statement;
+        try {
+            statement = connection.prepareStatement(FIND_BY_ROLE_AND_GROUP);
+            statement.setString(1, userRole);
+            statement.setString(2, userGroup);
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                int id = resultSet.getInt("user_id");
+                String userName = resultSet.getString("username");
+                String firstName = resultSet.getString("first_name");
+                String lastName = resultSet.getString("last_name");
+                String role = resultSet.getString("user_role");
+                String group = resultSet.getString("user_group");
+
+                User user = new User(id, userName, firstName, lastName, role, group);
+                users.add(user);
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        Collections.sort(users);
+        try {
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return users;
     }
 
 

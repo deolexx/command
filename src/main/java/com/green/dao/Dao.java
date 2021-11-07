@@ -17,6 +17,8 @@ List<T>findByGroup(String group);
 
 List<T>findByRole(String role);
 
+List<T>findByRoleAndGroup(String role,String group);
+
 
 
 

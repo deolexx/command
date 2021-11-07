@@ -28,6 +28,12 @@ public interface UserService {
     @WebMethod
     List<User> findByRole(String string);
 
+    @WebMethod
+    List<User> findByRoleAndGroup(String role,String group);
+
+
+
+
 }
 
 

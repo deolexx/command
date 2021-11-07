@@ -50,4 +50,9 @@ public class UserServiceImplementation implements UserService {
         return userDaoImplementation.findByRole(role);
     }
 
+    @Override
+    public List<User> findByRoleAndGroup(String role, String group) {
+        return userDaoImplementation.findByRoleAndGroup(role,group);
+    }
+
 }
