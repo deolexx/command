@@ -12,9 +12,10 @@ public class CommandServiceServer {
 
     public static void main(String[] args) {
      LOGGER.info("Creating WEB server and publish SOAP endpoint");
-//        Endpoint.publish("http://localhost:8081/command",new UserServiceImplementation());
-        Endpoint.publish("http://localhost:8081/command",new TestInterfaceImpl());
-        System.out.println(DBConnection.getConnection());
+        Endpoint.publish("http://localhost:8081/command",new UserServiceImplementation());
+        Endpoint.publish("http://localhost:8081/test",new TestInterfaceImpl());
+
+       // System.out.println(DBConnection.getConnection());
 
     }
 }
