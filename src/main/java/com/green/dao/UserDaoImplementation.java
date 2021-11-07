@@ -21,7 +21,7 @@ public class UserDaoImplementation implements UserDao {
     private static final String FIND_BY_ROLE_AND_GROUP = "SELECT * FROM command.user WHERE user_role = ? AND user_group = ?";
 
 
-    Connection connection = DBConnection.getConnection();
+    Connection connection=null;
 
     @Override
     public List<User> findAll() {
@@ -50,6 +50,7 @@ public class UserDaoImplementation implements UserDao {
             throwables.printStackTrace();
             try {
                 connection.close();
+                connection=null;
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -109,6 +110,7 @@ public class UserDaoImplementation implements UserDao {
         }
         try {
             connection.close();
+            connection=null;
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -171,6 +173,7 @@ public class UserDaoImplementation implements UserDao {
         Collections.sort(users);
         try {
             connection.close();
+            connection=null;
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -209,6 +212,7 @@ public class UserDaoImplementation implements UserDao {
         Collections.sort(users);
         try {
             connection.close();
+            connection=null;
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -248,6 +252,7 @@ public class UserDaoImplementation implements UserDao {
         Collections.sort(users);
         try {
             connection.close();
+            connection=null;
         } catch (SQLException e) {
             e.printStackTrace();
         }
