@@ -254,12 +254,12 @@ public class UserDaoImplementation implements UserDao {
         boolean rowUpdated = false;
         try (Connection connection = ds.getConnection()) {
             PreparedStatement statement;
-            
+
             statement = connection.prepareStatement(USER_EXISTS);
             statement.setInt(1, userId);
             ResultSet resultSet = statement.executeQuery();
-            while (resultSet.next()){
-              rowUpdated=  resultSet.getBoolean("exists");
+            while (resultSet.next()) {
+                rowUpdated = resultSet.getBoolean("exists");
             }
             statement.close();
         } catch (SQLException e) {
@@ -291,8 +291,5 @@ public class UserDaoImplementation implements UserDao {
     }
 
 
-    public static void main(String[] args) {
-        System.out.println(new UserDaoImplementation().userExistsInDb(1109266611));
-    }
 }
 
