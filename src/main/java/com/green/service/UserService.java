@@ -5,6 +5,7 @@ import com.green.entity.User;
 import javax.jws.WebMethod;
 import javax.jws.WebService;
 import java.util.List;
+import java.util.Optional;
 
 @WebService
 public interface UserService {
@@ -30,6 +31,9 @@ public interface UserService {
 
     @WebMethod
     List<User> findByRoleAndGroup(String role,String group);
+
+    @WebMethod
+    User findById(String id);
 
 
 

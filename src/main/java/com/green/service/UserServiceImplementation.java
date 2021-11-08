@@ -6,6 +6,7 @@ import com.green.entity.User;
 import javax.jws.WebMethod;
 import javax.jws.WebService;
 import java.util.List;
+import java.util.Optional;
 
 @WebService(endpointInterface = "com.green.service.UserService")
 public class UserServiceImplementation implements UserService {
@@ -53,6 +54,11 @@ public class UserServiceImplementation implements UserService {
     @Override
     public List<User> findByRoleAndGroup(String role, String group) {
         return userDaoImplementation.findByRoleAndGroup(role,group);
+    }
+
+    @Override
+    public User findById(String id){
+        return userDaoImplementation.findById(id);
     }
 
 }

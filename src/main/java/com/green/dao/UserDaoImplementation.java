@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 // TODO: 07.11.2021 cheak all SQL fields names in methods
 public class UserDaoImplementation implements UserDao {
@@ -19,9 +20,10 @@ public class UserDaoImplementation implements UserDao {
     private static final String FIND_BY_GROUP = "SELECT * FROM command.user WHERE user_group = ?";
     private static final String FIND_BY_ROLE = "SELECT * FROM command.user WHERE user_role = ?";
     private static final String FIND_BY_ROLE_AND_GROUP = "SELECT * FROM command.user WHERE user_role = ? AND user_group = ?";
+    private static final String FIND_BY_ID = "SELECT * FROM command.user WHERE user_id = ?";
 
 
-    Connection connection=null;
+    Connection connection = null;
 
     @Override
     public List<User> findAll() {
@@ -50,7 +52,7 @@ public class UserDaoImplementation implements UserDao {
             throwables.printStackTrace();
             try {
                 connection.close();
-                connection=null;
+                connection = null;
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -110,7 +112,7 @@ public class UserDaoImplementation implements UserDao {
         }
         try {
             connection.close();
-            connection=null;
+            connection = null;
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -173,7 +175,7 @@ public class UserDaoImplementation implements UserDao {
         Collections.sort(users);
         try {
             connection.close();
-            connection=null;
+            connection = null;
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -212,7 +214,7 @@ public class UserDaoImplementation implements UserDao {
         Collections.sort(users);
         try {
             connection.close();
-            connection=null;
+            connection = null;
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -252,12 +254,50 @@ public class UserDaoImplementation implements UserDao {
         Collections.sort(users);
         try {
             connection.close();
-            connection=null;
+            connection = null;
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
         return users;
+    }
+
+    @Override
+    public User findById(String userId) {
+        int id = 0;
+        String userName = null, firstName = null, lastName = null, role = null, group = null;
+        if (connection == null) {
+            connection = DBConnection.getConnection();
+        }
+        PreparedStatement statement;
+        try {
+            statement = connection.prepareStatement(FIND_BY_ID);
+            statement.setInt(1, Integer.parseInt(userId));
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                id = resultSet.getInt("user_id");
+                userName = resultSet.getString("username");
+                firstName = resultSet.getString("first_name");
+                lastName = resultSet.getString("last_name");
+                role = resultSet.getString("user_role");
+                group = resultSet.getString("user_group");
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+
+        try {
+            connection.close();
+            connection = null;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+
+        return new User(id, userName, firstName, lastName, role, group);
     }
 
 
