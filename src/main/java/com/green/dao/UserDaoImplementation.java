@@ -2,6 +2,7 @@ package com.green.dao;
 
 import com.green.entity.User;
 
+import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -9,7 +10,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 
 // TODO: 07.11.2021 cheak all SQL fields names in methods
 public class UserDaoImplementation implements UserDao {
@@ -22,19 +22,17 @@ public class UserDaoImplementation implements UserDao {
     private static final String FIND_BY_ROLE_AND_GROUP = "SELECT * FROM command.user WHERE user_role = ? AND user_group = ?";
     private static final String FIND_BY_ID = "SELECT * FROM command.user WHERE user_id = ?";
 
+    private static final DataSource ds = DBConnection.getDataSource();
 
-    Connection connection = null;
 
     @Override
     public List<User> findAll() {
-        if (connection == null) {
-            connection = DBConnection.getConnection();
-        }
-        System.out.println(connection);
-        List<User> users = new ArrayList<>();
 
-        PreparedStatement statement;
-        try {
+        List<User> users = new ArrayList<>();
+        try (Connection connection = ds.getConnection()) {
+
+            PreparedStatement statement;
+
             statement = connection.prepareStatement(FIND_ALL);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
@@ -48,17 +46,13 @@ public class UserDaoImplementation implements UserDao {
                 User user = new User(id, userName, firstName, lastName, role, group);
                 users.add(user);
             }
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-            try {
-                connection.close();
-                connection = null;
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+            statement.close();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
         Collections.sort(users);
-        // connection.close();
+
         System.out.println("closed");
         System.out.println(users.size());
         return users;
@@ -68,11 +62,9 @@ public class UserDaoImplementation implements UserDao {
 
     @Override
     public boolean save(User user) {
-        if (connection == null) {
-            connection = DBConnection.getConnection();
-        }
         boolean rowInserted = false;
-        try {
+        try (Connection connection = ds.getConnection()) {
+
             PreparedStatement statement = connection.prepareStatement(SAVE);
             statement.setInt(1, user.getId());
             statement.setString(2, user.getUsername());
@@ -81,38 +73,21 @@ public class UserDaoImplementation implements UserDao {
             statement.setString(2, user.getRole());
             statement.setString(2, user.getGroup());
             rowInserted = statement.executeUpdate() > 0;
-
-
+            statement.close();
         } catch (SQLException e) {
             e.printStackTrace();
-            try {
-                connection.close();
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
-            }
         }
         return rowInserted;
     }
 
     @Override
     public boolean delete(User o) {
-        if (connection == null) {
-            connection = DBConnection.getConnection();
-        }
         boolean rowDeleted = false;
-
-        try {
+        try (Connection connection = ds.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(DELETE);
             statement.setInt(1, o.getId());
             rowDeleted = statement.executeUpdate() > 0;
-            connection.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-
-        }
-        try {
-            connection.close();
-            connection = null;
+            statement.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -122,24 +97,19 @@ public class UserDaoImplementation implements UserDao {
 
     @Override
     public boolean update(User user) {
-        if (connection == null) {
-            connection = DBConnection.getConnection();
-        }
         boolean rowUpdated = false;
+        try (Connection connection = ds.getConnection()) {
 
-        try (PreparedStatement statement = connection.prepareStatement(UPDATE)) {
+
+            PreparedStatement statement = connection.prepareStatement(UPDATE);
             statement.setString(1, user.getRole());
             statement.setString(2, user.getGroup());
             statement.setInt(3, user.getId());
             rowUpdated = statement.executeUpdate() > 0;
-            connection.close();
+            statement.close();
         } catch (SQLException e) {
             e.printStackTrace();
-            try {
-                connection.close();
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
-            }
+
         }
 
         return rowUpdated;
@@ -147,13 +117,10 @@ public class UserDaoImplementation implements UserDao {
 
     @Override
     public List<User> findByGroup(String userGroup) {
-        if (connection == null) {
-            connection = DBConnection.getConnection();
-        }
         List<User> users = new ArrayList<>();
+        try (Connection connection = ds.getConnection()) {
+            PreparedStatement statement;
 
-        PreparedStatement statement;
-        try {
             statement = connection.prepareStatement(FIND_BY_GROUP);
             statement.setString(1, userGroup);
             ResultSet resultSet = statement.executeQuery();
@@ -169,15 +136,11 @@ public class UserDaoImplementation implements UserDao {
                 User user = new User(id, userName, firstName, lastName, role, group);
                 users.add(user);
             }
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-        Collections.sort(users);
-        try {
-            connection.close();
-            connection = null;
+            statement.close();
         } catch (SQLException e) {
             e.printStackTrace();
+            Collections.sort(users);
+
         }
         return users;
 
@@ -186,13 +149,10 @@ public class UserDaoImplementation implements UserDao {
 
     @Override
     public List<User> findByRole(String userRole) {
-        if (connection == null) {
-            connection = DBConnection.getConnection();
-        }
         List<User> users = new ArrayList<>();
+        try (Connection connection = ds.getConnection()) {
+            PreparedStatement statement;
 
-        PreparedStatement statement;
-        try {
             statement = connection.prepareStatement(FIND_BY_ROLE);
             statement.setString(1, userRole);
             ResultSet resultSet = statement.executeQuery();
@@ -208,30 +168,21 @@ public class UserDaoImplementation implements UserDao {
                 User user = new User(id, userName, firstName, lastName, role, group);
                 users.add(user);
             }
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-        Collections.sort(users);
-        try {
-            connection.close();
-            connection = null;
+            statement.close();
         } catch (SQLException e) {
             e.printStackTrace();
+            Collections.sort(users);
         }
-
         return users;
 
     }
 
     @Override
     public List<User> findByRoleAndGroup(String userRole, String userGroup) {
-        if (connection == null) {
-            connection = DBConnection.getConnection();
-        }
         List<User> users = new ArrayList<>();
+        try (Connection connection = ds.getConnection()) {
+            PreparedStatement statement;
 
-        PreparedStatement statement;
-        try {
             statement = connection.prepareStatement(FIND_BY_ROLE_AND_GROUP);
             statement.setString(1, userRole);
             statement.setString(2, userGroup);
@@ -248,17 +199,12 @@ public class UserDaoImplementation implements UserDao {
                 User user = new User(id, userName, firstName, lastName, role, group);
                 users.add(user);
             }
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-        Collections.sort(users);
-        try {
-            connection.close();
-            connection = null;
+            statement.close();
         } catch (SQLException e) {
             e.printStackTrace();
-        }
 
+        }
+        Collections.sort(users);
         return users;
     }
 
@@ -266,11 +212,9 @@ public class UserDaoImplementation implements UserDao {
     public User findById(String userId) {
         int id = 0;
         String userName = null, firstName = null, lastName = null, role = null, group = null;
-        if (connection == null) {
-            connection = DBConnection.getConnection();
-        }
-        PreparedStatement statement;
-        try {
+        try (Connection connection = ds.getConnection()) {
+            PreparedStatement statement;
+
             statement = connection.prepareStatement(FIND_BY_ID);
             statement.setInt(1, Integer.parseInt(userId));
             ResultSet resultSet = statement.executeQuery();
@@ -283,20 +227,10 @@ public class UserDaoImplementation implements UserDao {
                 role = resultSet.getString("user_role");
                 group = resultSet.getString("user_group");
             }
-
+            statement.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
-
-        try {
-            connection.close();
-            connection = null;
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-
         return new User(id, userName, firstName, lastName, role, group);
     }
 
