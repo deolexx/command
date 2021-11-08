@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-// TODO: 07.11.2021 cheak all SQL fields names in methods
+
 public class UserDaoImplementation implements UserDao {
     private static final String DELETE = "DELETE FROM command.user WHERE user_id = ?";
     private static final String SAVE = "INSERT INTO command.user (user_id,username,first_name,last_name,user_role,user_group) VALUES ( ?, ?, ?, ?, ?, ? )";
@@ -21,8 +21,11 @@ public class UserDaoImplementation implements UserDao {
     private static final String FIND_BY_ROLE = "SELECT * FROM command.user WHERE user_role = ?";
     private static final String FIND_BY_ROLE_AND_GROUP = "SELECT * FROM command.user WHERE user_role = ? AND user_group = ?";
     private static final String FIND_BY_ID = "SELECT * FROM command.user WHERE user_id = ?";
+    private static final String SAVE_USER_BY_FIELDS = "INSERT INTO command.user (user_id,username,first_name,last_name,user_role,user_group) VALUES ( ?, ?, ?, ?, ?, ? )";
+
 
     private static final DataSource ds = DBConnection.getDataSource();
+    private static final String USER_EXISTS = "SELECT exists(SELECT 1 FROM command.user where user_id = ?) AS exists";
 
 
     @Override
@@ -68,10 +71,10 @@ public class UserDaoImplementation implements UserDao {
             PreparedStatement statement = connection.prepareStatement(SAVE);
             statement.setInt(1, user.getId());
             statement.setString(2, user.getUsername());
-            statement.setString(2, user.getFirstName());
-            statement.setString(2, user.getLastName());
-            statement.setString(2, user.getRole());
-            statement.setString(2, user.getGroup());
+            statement.setString(3, user.getFirstName());
+            statement.setString(4, user.getLastName());
+            statement.setString(5, user.getRole());
+            statement.setString(6, user.getGroup());
             rowInserted = statement.executeUpdate() > 0;
             statement.close();
         } catch (SQLException e) {
@@ -96,11 +99,23 @@ public class UserDaoImplementation implements UserDao {
     }
 
     @Override
+    public boolean deleteById(int userId) {
+        boolean rowDeleted = false;
+        try (Connection connection = ds.getConnection()) {
+            PreparedStatement statement = connection.prepareStatement(DELETE);
+            statement.setInt(1, userId);
+            rowDeleted = statement.executeUpdate() > 0;
+            statement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return rowDeleted;
+    }
+
+    @Override
     public boolean update(User user) {
         boolean rowUpdated = false;
         try (Connection connection = ds.getConnection()) {
-
-
             PreparedStatement statement = connection.prepareStatement(UPDATE);
             statement.setString(1, user.getRole());
             statement.setString(2, user.getGroup());
@@ -234,5 +249,50 @@ public class UserDaoImplementation implements UserDao {
         return new User(id, userName, firstName, lastName, role, group);
     }
 
+    @Override
+    public boolean userExistsInDb(int userId) {
+        boolean rowUpdated = false;
+        try (Connection connection = ds.getConnection()) {
+            PreparedStatement statement;
+            
+            statement = connection.prepareStatement(USER_EXISTS);
+            statement.setInt(1, userId);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()){
+              rowUpdated=  resultSet.getBoolean("exists");
+            }
+            statement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return rowUpdated;
+    }
 
+    @Override
+    public boolean saveUserByFields(int userId, String userUsername, String userFirstName, String userLastName, String userGroup, String userRole) {
+        boolean rowInserted = false;
+
+        try (Connection connection = ds.getConnection()) {
+
+            PreparedStatement statement = connection.prepareStatement(SAVE_USER_BY_FIELDS);
+
+            statement.setInt(1, userId);
+            statement.setString(2, userUsername);
+            statement.setString(3, userFirstName);
+            statement.setString(4, userLastName);
+            statement.setString(5, userGroup);
+            statement.setString(6, userRole);
+            rowInserted = statement.executeUpdate() > 0;
+            statement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return rowInserted;
+    }
+
+
+    public static void main(String[] args) {
+        System.out.println(new UserDaoImplementation().userExistsInDb(1109266611));
+    }
 }
+

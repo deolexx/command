@@ -2,7 +2,6 @@ package com.green.dao;
 
 
 import java.util.List;
-import java.util.Optional;
 
 public interface Dao<T, ID> {
 
@@ -10,7 +9,11 @@ public interface Dao<T, ID> {
 
     boolean save(T o);
 
+    boolean saveUserByFields(int id, String username, String firstName, String lastName, String group, String role);
+
     boolean delete(T o);
+
+    boolean deleteById(int userId);
 
     boolean update(T o);
 
@@ -20,7 +23,9 @@ public interface Dao<T, ID> {
 
     List<T> findByRoleAndGroup(String role, String group);
 
-   T findById(String id);
+    T findById(String id);
+
+    boolean userExistsInDb(int userId);
 
 
 }

@@ -5,7 +5,6 @@ import com.green.entity.User;
 import javax.jws.WebMethod;
 import javax.jws.WebService;
 import java.util.List;
-import java.util.Optional;
 
 @WebService
 public interface UserService {
@@ -27,16 +26,22 @@ public interface UserService {
     boolean delete(User user);
 
     @WebMethod
+    boolean deleteById(int userId);
+
+    @WebMethod
+    boolean userExistsInDb(int userId);
+
+    @WebMethod
     List<User> findByRole(String string);
 
     @WebMethod
-    List<User> findByRoleAndGroup(String role,String group);
+    List<User> findByRoleAndGroup(String role, String group);
 
     @WebMethod
     User findById(String id);
 
-
-
+    @WebMethod
+    boolean saveUserByFields(int userId, String userUsername, String userFirstName, String userLastName, String userGroup, String userRole);
 
 }
 
