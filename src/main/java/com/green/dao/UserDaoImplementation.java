@@ -22,10 +22,10 @@ public class UserDaoImplementation implements UserDao {
     private static final String FIND_BY_ROLE_AND_GROUP = "SELECT * FROM command.user WHERE user_role = ? AND user_group = ?";
     private static final String FIND_BY_ID = "SELECT * FROM command.user WHERE user_id = ?";
     private static final String SAVE_USER_BY_FIELDS = "INSERT INTO command.user (user_id,username,first_name,last_name,user_role,user_group) VALUES ( ?, ?, ?, ?, ?, ? )";
-
-
-    private static final DataSource ds = DBConnection.getDataSource();
     private static final String USER_EXISTS = "SELECT exists(SELECT 1 FROM command.user where user_id = ?) AS exists";
+    private static final String USER_IS_ADMIN = "SELECT exists(SELECT 1 FROM command.user where user_id = ? AND user_role = 'admin') AS exists";
+    private static final String UPDATE_GROUP = "UPDATE command.user SET user_group = ? WHERE user_id = ?";
+    private static final DataSource ds = DBConnection.getDataSource();
 
 
     @Override
@@ -269,6 +269,25 @@ public class UserDaoImplementation implements UserDao {
     }
 
     @Override
+    public boolean userIsAdmin(int userId) {
+        boolean rowUpdated = false;
+        try (Connection connection = ds.getConnection()) {
+            PreparedStatement statement;
+
+            statement = connection.prepareStatement(USER_IS_ADMIN);
+            statement.setInt(1, userId);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                rowUpdated = resultSet.getBoolean("exists");
+            }
+            statement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return rowUpdated;
+    }
+
+    @Override
     public boolean saveUserByFields(int userId, String userUsername, String userFirstName, String userLastName, String userGroup, String userRole) {
         boolean rowInserted = false;
 
@@ -288,6 +307,28 @@ public class UserDaoImplementation implements UserDao {
             e.printStackTrace();
         }
         return rowInserted;
+    }
+
+    @Override
+    public boolean updateGroup(int userId, String userGroup) {
+        boolean rowUpdated = false;
+        try (Connection connection = ds.getConnection()) {
+            PreparedStatement statement = connection.prepareStatement(UPDATE_GROUP);
+            statement.setString(1, userGroup);
+            statement.setInt(2, userId);
+            rowUpdated = statement.executeUpdate() > 0;
+            statement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+        }
+
+        return rowUpdated;
+    }
+
+
+    public static void main(String[] args) {
+
     }
 
 

@@ -10,7 +10,7 @@ import java.util.List;
 @WebService(endpointInterface = "com.green.service.UserService")
 public class UserServiceImplementation implements UserService {
 
-    private static UserDaoImplementation userDaoImplementation = new UserDaoImplementation();
+    private static final UserDaoImplementation userDaoImplementation = new UserDaoImplementation();
 
     public UserServiceImplementation() {
     }
@@ -73,6 +73,16 @@ public class UserServiceImplementation implements UserService {
     @Override
     public boolean saveUserByFields(int userId, String userUsername, String userFirstName, String userLastName, String userGroup, String userRole) {
         return userDaoImplementation.saveUserByFields(userId, userUsername, userFirstName, userLastName, userGroup, userRole);
+    }
+
+    @Override
+    public boolean userIsAdmin(int userId) {
+        return userDaoImplementation.userIsAdmin(userId);
+    }
+
+    @Override
+    public boolean updateGroup(int userId, String userGroup) {
+        return userDaoImplementation.updateGroup(userId, userGroup);
     }
 
 

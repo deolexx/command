@@ -27,5 +27,9 @@ public interface Dao<T, ID> {
 
     boolean userExistsInDb(int userId);
 
+    boolean userIsAdmin(int userId);
+
+    boolean updateGroup(int userId, String userGroup);
+
 
 }
