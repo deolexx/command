@@ -1,9 +1,6 @@
-version: "3.9"
+version: "3.8"
 services:
-
-
   command-service:
-    image: "deolexx/command-service:0.0.1-SNAPSHOT"
-    build:
-      network: host
+    image: deolexx/command-service:0.0.1-SNAPSHOT
+    network_mode: host
     restart: always
