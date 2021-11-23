@@ -1,2 +1,10 @@
-package com.green.entity;public class Mentor {
+package com.green.entity;
+
+import java.util.Set;
+
+public class Mentor extends User{
+
+
+    Set<Student> studentsSet;
+
 }
