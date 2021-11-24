@@ -1,16 +1,13 @@
 package com.green.entity;
 
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-@Table(schema = "command",name = "user")
+@Table(schema = "command", name = "user")
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
 @Entity(name = "user")
@@ -29,10 +26,10 @@ public class User implements Comparable<User> {
     @Column(name = "last_name")
     private String lastName;
     @XmlElement
-    @Column(name = "role")
+    @Column(name = "user_role")
     private String role;
     @XmlElement
-    @Column(name = "group")
+    @Column(name = "user_group")
     private String group;
 
     public User(int id, String username, String firstName, String lastName, String role, String group) {

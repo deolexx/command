@@ -3,6 +3,7 @@ package com.green.dao;
 import com.green.entity.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.hibernate.boot.Metadata;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
@@ -12,53 +13,40 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class HibernateUserDaoImplementation implements UserDao{
+public class HibernateUserDaoImplementation implements UserDao {
 
-    public static Session getCurrentSession() {
-        // Hibernate 5.4 SessionFactory example without XML
-        Map<String, String> settings = new HashMap<>();
-        settings.put("connection.driver_class", "org.postgresql.Driver");
-        settings.put("dialect", "org.hibernate.dialect.PostgreSQL95Dialect");
-        settings.put("hibernate.connection.url",
-                "jdbc:postgresql://3.13.111.5:5432/tasktrack");
-        settings.put("hibernate.connection.username", "admin");
-        settings.put("hibernate.connection.password", "admin");
-        settings.put("hibernate.current_session_context_class", "thread");
-        settings.put("hibernate.show_sql", "true");
-        settings.put("hibernate.format_sql", "true");
-
-        ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
-                .applySettings(settings).build();
-
-        MetadataSources metadataSources = new MetadataSources(serviceRegistry);
-        // metadataSources.addAnnotatedClass(Player.class);
-        Metadata metadata = metadataSources.buildMetadata();
-
-        // here we build the SessionFactory (Hibernate 5.4)
-        SessionFactory sessionFactory = metadata.getSessionFactoryBuilder().build();
-        Session session = sessionFactory.getCurrentSession();
-        return session;
-    }
-
-
-    // TODO: 24.11.21 TEST CONNECTION
+    // TODO: 24.11.21 FOR TEST CASES
     public static void main(String[] args) {
-        Session session = getCurrentSession();
-        session.beginTransaction();
-        System.out.println(session.isConnected());
-        session.getTransaction().commit();
-        System.out.println(session.isConnected());
+//        new HibernateUserDaoImplementation().save(new User(1233, "batman", "Bruce", "Wayne", "user", "green"));
+        User byId = new HibernateUserDaoImplementation().findById("2");
+        System.out.println(byId.getFirstName());
     }
 
 
     @Override
     public List<User> findAll() {
+
         return null;
+
 
     }
 
     @Override
     public boolean save(User o) {
+        Transaction transaction = null;
+        // auto close session object
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            // start the transaction
+            transaction = session.beginTransaction();
+            // save student object
+            session.save(o);
+            // commit transction
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+        }
         return false;
     }
 
@@ -99,7 +87,24 @@ public class HibernateUserDaoImplementation implements UserDao{
 
     @Override
     public User findById(String id) {
-        return null;
+        Transaction transaction = null;
+        User userFromDb = null;
+        // auto close session object
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            // start the transaction
+            transaction = session.beginTransaction();
+            // find user object by id
+            userFromDb = session.get(User.class, Integer.parseInt(id));
+            // commit transaction
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+        }
+
+
+        return userFromDb;
     }
 
     @Override
