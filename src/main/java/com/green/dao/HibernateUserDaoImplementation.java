@@ -2,52 +2,51 @@ package com.green.dao;
 
 import com.green.entity.User;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import org.hibernate.boot.Metadata;
-import org.hibernate.boot.MetadataSources;
-import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
-import org.hibernate.service.ServiceRegistry;
 
-import java.util.HashMap;
+import javax.persistence.criteria.CriteriaQuery;
 import java.util.List;
-import java.util.Map;
 
 public class HibernateUserDaoImplementation implements UserDao {
 
     // TODO: 24.11.21 FOR TEST CASES
     public static void main(String[] args) {
 //        new HibernateUserDaoImplementation().save(new User(1233, "batman", "Bruce", "Wayne", "user", "green"));
-        User byId = new HibernateUserDaoImplementation().findById("2");
-        System.out.println(byId.getFirstName());
+//        User byId = new HibernateUserDaoImplementation().findById("2");
+        List<User> all = new HibernateUserDaoImplementation().findAll();
+        System.out.println(all.size());
     }
 
 
     @Override
     public List<User> findAll() {
-
-        return null;
-
-
+        List<User> users;
+        Transaction transaction;
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            transaction = session.beginTransaction();
+            CriteriaQuery<User> criteriaQuery = session.getCriteriaBuilder().createQuery(User.class);
+            criteriaQuery.from(User.class);
+            users = session.createQuery(criteriaQuery).getResultList();
+            transaction.commit();
+        }
+        return users;
     }
 
     @Override
     public boolean save(User o) {
+        boolean rowInserted = false;
         Transaction transaction = null;
-        // auto close session object
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            // start the transaction
             transaction = session.beginTransaction();
-            // save student object
             session.save(o);
-            // commit transction
             transaction.commit();
+            rowInserted = true;
         } catch (Exception e) {
             if (transaction != null) {
                 transaction.rollback();
             }
         }
-        return false;
+        return rowInserted;
     }
 
     @Override
@@ -102,8 +101,6 @@ public class HibernateUserDaoImplementation implements UserDao {
                 transaction.rollback();
             }
         }
-
-
         return userFromDb;
     }
 
