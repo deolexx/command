@@ -1,8 +1,6 @@
 package com.green.dao;
 
-import com.green.entity.Lead;
 import com.green.entity.Mentor;
-import com.green.entity.Student;
 import com.green.entity.User;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -18,9 +16,11 @@ public class HibernateUserDaoImplementation implements UserDao {
 //    new HibernateUserDaoImplementation().save(new Mentor(1235, "batman3", "Bruce", "Wayne", "green"));
 //    new HibernateUserDaoImplementation().save(new Lead(1234, "batman2", "Bruce", "Wayne", "green"));
 //        User byId = new HibernateUserDaoImplementation().findById("2");
-        List<User> all = new HibernateUserDaoImplementation().findAll();
-        System.out.println(new HibernateUserDaoImplementation().delete(new Lead(1234, "batman2", "Bruce", "Wayne", "green")));
-        System.out.println(all.size());
+//        List<User> all = new HibernateUserDaoImplementation().findAll();
+//        System.out.println(new HibernateUserDaoImplementation().delete(new Lead(1234, "batman2", "Bruce", "Wayne", "green")));
+//        System.out.println(new HibernateUserDaoImplementation().update(new Mentor(1233, "sup", "Clark", "Kent", "blue")));
+//        System.out.println(all.size());
+        System.out.println(new HibernateUserDaoImplementation().findById("1233"));
     }
 
 
@@ -79,7 +79,21 @@ public class HibernateUserDaoImplementation implements UserDao {
 
     @Override
     public boolean deleteById(int userId) {
-        return false;
+        boolean rowInserted = false;
+        Transaction transaction = null;
+        User userFromDb = null;
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            transaction = session.beginTransaction();
+            userFromDb = session.get(User.class, userId);
+            session.delete(userFromDb);
+            transaction.commit();
+            rowInserted = true;
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+        }
+        return rowInserted;
     }
 
     @Override
@@ -88,7 +102,7 @@ public class HibernateUserDaoImplementation implements UserDao {
         Transaction transaction = null;
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             transaction = session.beginTransaction();
-            session.update(o);
+            session.saveOrUpdate(o);
             transaction.commit();
             rowInserted = true;
         } catch (Exception e) {

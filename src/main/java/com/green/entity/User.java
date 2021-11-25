@@ -7,9 +7,9 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-@Table(schema = "command", name = "user")
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
+@Table(schema = "command", name = "user")
 @Entity(name = "user")
 @DiscriminatorColumn(name = "user_role")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
