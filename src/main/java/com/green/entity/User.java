@@ -11,6 +11,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
 @Entity(name = "user")
+@DiscriminatorColumn(name = "user_role")
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public class User implements Comparable<User> {
     @XmlElement
     @Id
@@ -26,7 +28,8 @@ public class User implements Comparable<User> {
     @Column(name = "last_name")
     private String lastName;
     @XmlElement
-    @Column(name = "user_role")
+
+    @Column(name = "user_role", insertable = false, updatable = false)
     private String role;
     @XmlElement
     @Column(name = "user_group")
@@ -41,11 +44,12 @@ public class User implements Comparable<User> {
         this.group = group;
     }
 
-    public User(String username, String firstName, String lastName, String role, String group) {
+
+    public User(int id, String username, String firstName, String lastName, String group) {
+        this.id = id;
         this.username = username;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.role = role;
         this.group = group;
     }
 

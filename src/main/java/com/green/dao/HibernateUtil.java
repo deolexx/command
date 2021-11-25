@@ -2,6 +2,9 @@ package com.green.dao;
 
 import java.util.Properties;
 
+import com.green.entity.Lead;
+import com.green.entity.Mentor;
+import com.green.entity.Student;
 import com.green.entity.User;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
@@ -35,6 +38,11 @@ public class HibernateUtil {
                 configuration.setProperties(settings);
 
                 configuration.addAnnotatedClass(User.class);
+                configuration.addAnnotatedClass(Student.class);
+                configuration.addAnnotatedClass(Mentor.class);
+                configuration.addAnnotatedClass(Lead.class);
+
+
 
                 ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
                         .applySettings(configuration.getProperties()).build();

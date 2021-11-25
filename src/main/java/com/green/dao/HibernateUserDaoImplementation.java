@@ -1,5 +1,8 @@
 package com.green.dao;
 
+import com.green.entity.Lead;
+import com.green.entity.Mentor;
+import com.green.entity.Student;
 import com.green.entity.User;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -11,10 +14,12 @@ public class HibernateUserDaoImplementation implements UserDao {
 
     // TODO: 24.11.21 FOR TEST CASES
     public static void main(String[] args) {
-//        new HibernateUserDaoImplementation().save(new User(1233, "batman", "Bruce", "Wayne", "user", "green"));
+//    new HibernateUserDaoImplementation().save(new Student(1233, "batman", "Bruce", "Wayne", "green"));
+//    new HibernateUserDaoImplementation().save(new Mentor(1235, "batman3", "Bruce", "Wayne", "green"));
+//    new HibernateUserDaoImplementation().save(new Lead(1234, "batman2", "Bruce", "Wayne", "green"));
 //        User byId = new HibernateUserDaoImplementation().findById("2");
-        List<User> all = new HibernateUserDaoImplementation().findAll();
-        System.out.println(all.size());
+     List<User> all = new HibernateUserDaoImplementation().findAll();
+      System.out.println(all.size());
     }
 
 
@@ -38,7 +43,7 @@ public class HibernateUserDaoImplementation implements UserDao {
         Transaction transaction = null;
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             transaction = session.beginTransaction();
-            session.save(o);
+            session.saveOrUpdate(o);
             transaction.commit();
             rowInserted = true;
         } catch (Exception e) {
