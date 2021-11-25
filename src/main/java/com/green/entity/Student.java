@@ -13,15 +13,5 @@ public class Student extends User {
         super(id, username, firstName, lastName, group);
     }
 
-//    @Column(name = "mentors_set")
-//    @ElementCollection(targetClass=Mentor.class)
-//    Set<Mentor> mentorsSet;
-//
-//    public Set<Mentor> getMentorsSet() {
-//        return mentorsSet;
-//    }
-//
-//    public void setMentorsSet(Set<Mentor> mentorsSet) {
-//        this.mentorsSet = mentorsSet;
-//    }
+
 }

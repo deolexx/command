@@ -13,9 +13,9 @@ import org.hibernate.cfg.Environment;
 import org.hibernate.service.ServiceRegistry;
 
 
-
 public class HibernateUtil {
     private static SessionFactory sessionFactory;
+
     public static SessionFactory getSessionFactory() {
         if (sessionFactory == null) {
             try {
@@ -41,7 +41,6 @@ public class HibernateUtil {
                 configuration.addAnnotatedClass(Student.class);
                 configuration.addAnnotatedClass(Mentor.class);
                 configuration.addAnnotatedClass(Lead.class);
-
 
 
                 ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()

@@ -18,8 +18,9 @@ public class HibernateUserDaoImplementation implements UserDao {
 //    new HibernateUserDaoImplementation().save(new Mentor(1235, "batman3", "Bruce", "Wayne", "green"));
 //    new HibernateUserDaoImplementation().save(new Lead(1234, "batman2", "Bruce", "Wayne", "green"));
 //        User byId = new HibernateUserDaoImplementation().findById("2");
-     List<User> all = new HibernateUserDaoImplementation().findAll();
-      System.out.println(all.size());
+        List<User> all = new HibernateUserDaoImplementation().findAll();
+        System.out.println(new HibernateUserDaoImplementation().delete(new Lead(1234, "batman2", "Bruce", "Wayne", "green")));
+        System.out.println(all.size());
     }
 
 
@@ -43,7 +44,7 @@ public class HibernateUserDaoImplementation implements UserDao {
         Transaction transaction = null;
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             transaction = session.beginTransaction();
-            session.saveOrUpdate(o);
+            session.save(o);
             transaction.commit();
             rowInserted = true;
         } catch (Exception e) {
@@ -61,7 +62,19 @@ public class HibernateUserDaoImplementation implements UserDao {
 
     @Override
     public boolean delete(User o) {
-        return false;
+        boolean rowInserted = false;
+        Transaction transaction = null;
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            transaction = session.beginTransaction();
+            session.delete(o);
+            transaction.commit();
+            rowInserted = true;
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+        }
+        return rowInserted;
     }
 
     @Override
@@ -71,7 +84,19 @@ public class HibernateUserDaoImplementation implements UserDao {
 
     @Override
     public boolean update(User o) {
-        return false;
+        boolean rowInserted = false;
+        Transaction transaction = null;
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            transaction = session.beginTransaction();
+            session.update(o);
+            transaction.commit();
+            rowInserted = true;
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+        }
+        return rowInserted;
     }
 
     @Override
