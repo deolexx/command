@@ -11,6 +11,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Entity
 @DiscriminatorValue("student")
 public class Student extends User {
+    // TODO: 25.11.21 Still need to create unique fields for Student class
     public Student() {
     }
 

@@ -1,6 +1,5 @@
 package com.green.dao;
 
-import com.green.entity.Mentor;
 import com.green.entity.User;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -9,6 +8,8 @@ import javax.persistence.criteria.CriteriaQuery;
 import java.util.List;
 
 public class HibernateUserDaoImplementation implements UserDao {
+
+
 
     // TODO: 24.11.21 FOR TEST CASES
     public static void main(String[] args) {
