@@ -32,7 +32,7 @@ public class HibernateUtil {
                 settings.put(Environment.SHOW_SQL, "true");
 
                 settings.put(Environment.CURRENT_SESSION_CONTEXT_CLASS, "thread");
-
+                // TODO: 26.11.2021 change to update when all tested
                 settings.put(Environment.HBM2DDL_AUTO, "update");
 
                 configuration.setProperties(settings);

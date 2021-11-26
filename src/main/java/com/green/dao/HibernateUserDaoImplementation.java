@@ -1,5 +1,7 @@
 package com.green.dao;
 
+import com.green.entity.Mentor;
+import com.green.entity.Student;
 import com.green.entity.User;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -10,18 +12,31 @@ import java.util.List;
 public class HibernateUserDaoImplementation implements UserDao {
 
 
-
     // TODO: 24.11.21 FOR TEST CASES
     public static void main(String[] args) {
-//    new HibernateUserDaoImplementation().save(new Student(1233, "batman", "Bruce", "Wayne", "green"));
-//    new HibernateUserDaoImplementation().save(new Mentor(1235, "batman3", "Bruce", "Wayne", "green"));
-//    new HibernateUserDaoImplementation().save(new Lead(1234, "batman2", "Bruce", "Wayne", "green"));
+        HibernateUserDaoImplementation hibernateUserDaoImplementation = new HibernateUserDaoImplementation();
+
+        // TODO: 26.11.2021 uncomment to add 3 test users to user table int commandnew schema
+//        hibernateUserDaoImplementation.save(new Student(1233, "batman", "Bruce", "Wayne", "green"));
+//       hibernateUserDaoImplementation.save(new Mentor(1235, "batman3", "Bruce", "Wayne", "green"));
+//       hibernateUserDaoImplementation.save(new Lead(1234, "batman2", "Bruce", "Wayne", "green"));
+
+
+        // TODO: 26.11.2021 uncomment for testing
+
 //        User byId = new HibernateUserDaoImplementation().findById("2");
 //        List<User> all = new HibernateUserDaoImplementation().findAll();
 //        System.out.println(new HibernateUserDaoImplementation().delete(new Lead(1234, "batman2", "Bruce", "Wayne", "green")));
 //        System.out.println(new HibernateUserDaoImplementation().update(new Mentor(1233, "sup", "Clark", "Kent", "blue")));
 //        System.out.println(all.size());
-        System.out.println(new HibernateUserDaoImplementation().findById("1233"));
+//        System.out.println(new HibernateUserDaoImplementation().findById("1233"));
+//        Mentor byId = (Mentor) hibernateUserDaoImplementation.findById("1235");
+//        Student studentById = (Student) hibernateUserDaoImplementation.findById("1233");
+//        byId.addStudent(studentById);
+//        System.out.println(byId.getStudents().size());
+//        hibernateUserDaoImplementation.delete(byId);
+
+
     }
 
 
@@ -56,10 +71,6 @@ public class HibernateUserDaoImplementation implements UserDao {
         return rowInserted;
     }
 
-    @Override
-    public boolean saveUserByFields(int id, String username, String firstName, String lastName, String group, String role) {
-        return false;
-    }
 
     @Override
     public boolean delete(User o) {
@@ -114,20 +125,6 @@ public class HibernateUserDaoImplementation implements UserDao {
         return rowInserted;
     }
 
-    @Override
-    public List<User> findByGroup(String group) {
-        return null;
-    }
-
-    @Override
-    public List<User> findByRole(String role) {
-        return null;
-    }
-
-    @Override
-    public List<User> findByRoleAndGroup(String role, String group) {
-        return null;
-    }
 
     @Override
     public User findById(String id) {
@@ -148,6 +145,28 @@ public class HibernateUserDaoImplementation implements UserDao {
         }
         return userFromDb;
     }
+
+    @Override
+    public boolean saveUserByFields(int id, String username, String firstName, String lastName, String group, String role) {
+        return false;
+    }
+
+
+    @Override
+    public List<User> findByGroup(String group) {
+        return null;
+    }
+
+    @Override
+    public List<User> findByRole(String role) {
+        return null;
+    }
+
+    @Override
+    public List<User> findByRoleAndGroup(String role, String group) {
+        return null;
+    }
+
 
     @Override
     public boolean userExistsInDb(int userId) {

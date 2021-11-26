@@ -2,9 +2,13 @@ package com.green.entity;
 
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.ManyToMany;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
+import java.util.HashSet;
+import java.util.Set;
 
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -19,5 +23,15 @@ public class Student extends User {
         super(id, username, firstName, lastName, group);
     }
 
+    @ManyToMany(fetch = FetchType.EAGER)
+    private Set<Mentor> mentors = new HashSet<>();
 
+
+    public Set<Mentor> getMentors() {
+        return mentors;
+    }
+
+    public void setMentors(Set<Mentor> mentors) {
+        this.mentors = mentors;
+    }
 }
