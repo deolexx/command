@@ -1,6 +1,20 @@
-version: "3.8"
+version: '3'
+
 services:
-  command-service:
-    image: deolexx/command-service:0.0.1-SNAPSHOT
-    network_mode: host
+  postgres:
+    image: postgres:13.1
+    healthcheck:
+      test: [ "CMD", "pg_isready", "-q", "-d", "postgres", "-U"  ]
+      timeout: 45s
+      interval: 10s
+      retries: 10
     restart: always
+    environment:
+      - APP_DB_NAME=catcrud
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=2033724
+
+    volumes:
+      - ./db:/docker-entrypoint-initdb.d/
+    ports:
+      - 5432:5432

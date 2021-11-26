@@ -1,5 +1,7 @@
 package com.green.entity;
 
+
+import javax.persistence.*;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -7,18 +9,30 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
+@Table(schema = "command", name = "user")
+@Entity(name = "user")
+@DiscriminatorColumn(name = "user_role")
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public class User implements Comparable<User> {
     @XmlElement
+    @Id
+    @Column(name = "user_id")
     private int id;
     @XmlElement
+    @Column(name = "username")
     private String username;
     @XmlElement
+    @Column(name = "first_name")
     private String firstName;
     @XmlElement
+    @Column(name = "last_name")
     private String lastName;
     @XmlElement
+
+    @Column(name = "user_role", insertable = false, updatable = false)
     private String role;
     @XmlElement
+    @Column(name = "user_group")
     private String group;
 
     public User(int id, String username, String firstName, String lastName, String role, String group) {
@@ -27,6 +41,15 @@ public class User implements Comparable<User> {
         this.firstName = firstName;
         this.lastName = lastName;
         this.role = role;
+        this.group = group;
+    }
+
+
+    public User(int id, String username, String firstName, String lastName, String group) {
+        this.id = id;
+        this.username = username;
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.group = group;
     }
 

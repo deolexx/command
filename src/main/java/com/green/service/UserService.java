@@ -43,6 +43,12 @@ public interface UserService {
     @WebMethod
     boolean saveUserByFields(int userId, String userUsername, String userFirstName, String userLastName, String userGroup, String userRole);
 
+    @WebMethod
+    boolean userIsAdmin(int userId);
+
+    @WebMethod
+    boolean updateGroup(int userId, String userGroup);
+
 }
 
 
