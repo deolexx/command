@@ -36,7 +36,7 @@ public class HibernateUtil {
                 settings.put(Environment.HBM2DDL_AUTO, "update");
 
                 configuration.setProperties(settings);
-
+                //declare all necessary classes
                 configuration.addAnnotatedClass(User.class);
                 configuration.addAnnotatedClass(Student.class);
                 configuration.addAnnotatedClass(Mentor.class);
