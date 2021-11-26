@@ -6,6 +6,7 @@ import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.HashSet;
 import java.util.Set;
@@ -22,7 +23,8 @@ public class Student extends User {
     public Student(int id, String username, String firstName, String lastName, String group) {
         super(id, username, firstName, lastName, group);
     }
-
+    @XmlElement
+    // fetch = FetchType.EAGER  added to avoid LazyInitializationException
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<Mentor> mentors = new HashSet<>();
 

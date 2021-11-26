@@ -9,7 +9,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
-// TODO: 26.11.2021 change back to command when all tested 
+// TODO: 26.11.2021 change schema back to command when everything tested
 @Table(schema = "commandnew", name = "user")
 @Entity(name = "user")
 @DiscriminatorColumn(name = "user_role")
