@@ -5,5 +5,12 @@ How to run
 2. start `command` by running `CommandServiceServer.main` method
 3. SOAP server is running now! http://localhost:8081/command?wsdl for WSDL schema
 
+Реализация на хибере работает удаленно с commandnew схемой
+Настройки хибернейта  для подключения и работы с бд в HibernateUtil.java
+Новые методы в HibernateUserDaoImplementation.java
+там же пока что для тестов добавлен мейн метод с всякими заготовками
+
+
+
 
 
