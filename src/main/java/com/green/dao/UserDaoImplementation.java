@@ -29,6 +29,7 @@ public class UserDaoImplementation implements UserDao {
 
 
     @Override
+    @Deprecated
     public List<User> findAll() {
 
         List<User> users = new ArrayList<>();
@@ -64,6 +65,7 @@ public class UserDaoImplementation implements UserDao {
     }
 
     @Override
+    @Deprecated
     public boolean save(User user) {
         boolean rowInserted = false;
         try (Connection connection = ds.getConnection()) {
@@ -84,6 +86,7 @@ public class UserDaoImplementation implements UserDao {
     }
 
     @Override
+    @Deprecated
     public boolean delete(User o) {
         boolean rowDeleted = false;
         try (Connection connection = ds.getConnection()) {
@@ -113,6 +116,7 @@ public class UserDaoImplementation implements UserDao {
     }
 
     @Override
+    @Deprecated
     public boolean update(User user) {
         boolean rowUpdated = false;
         try (Connection connection = ds.getConnection()) {
@@ -224,6 +228,7 @@ public class UserDaoImplementation implements UserDao {
     }
 
     @Override
+    @Deprecated
     public User findById(String userId) {
         int id = 0;
         String userName = null, firstName = null, lastName = null, role = null, group = null;

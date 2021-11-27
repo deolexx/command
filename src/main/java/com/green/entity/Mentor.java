@@ -26,11 +26,12 @@ public class Mentor extends User {
     // TODO: 26.11.2021 now if we delete mentor
     //  all mapped students also will be deleted
     //  still need some tests
-    @XmlElement
+
     // fetch = FetchType.EAGER  added to avoid LazyInitializationException
     // cascade = CascadeType.REMOVE added to delete mapped students when Mentor removed
+    @XmlElement
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinTable(schema = "commandnew2",
+    @JoinTable(schema = "commandnew",
             name = "mentor_student",
             joinColumns = {@JoinColumn(name = "mentor_id")},
             inverseJoinColumns = {@JoinColumn(name = "student_id")}
