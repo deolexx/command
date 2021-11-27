@@ -1,5 +1,6 @@
 package com.green.dao;
 
+import com.green.entity.Lead;
 import com.green.entity.Mentor;
 import com.green.entity.Student;
 import com.green.entity.User;
@@ -14,13 +15,13 @@ public class HibernateUserDaoImplementation implements UserDao {
 
     // TODO: 24.11.21 FOR TEST CASES
     public static void main(String[] args) {
-        HibernateUserDaoImplementation hibernateUserDaoImplementation = new HibernateUserDaoImplementation();
+      final   HibernateUserDaoImplementation hibernateUserDaoImplementation = new HibernateUserDaoImplementation();
 
         // TODO: 26.11.2021 uncomment to add 3 test users to user table int commandnew schema
 //        hibernateUserDaoImplementation.save(new Student(1233, "batman", "Bruce", "Wayne", "green"));
-//       hibernateUserDaoImplementation.save(new Mentor(1235, "batman3", "Bruce", "Wayne", "green"));
-//       hibernateUserDaoImplementation.save(new Lead(1234, "batman2", "Bruce", "Wayne", "green"));
-
+//      hibernateUserDaoImplementation.save(new Mentor(1235, "batman3", "Bruce", "Wayne", "green"));
+//      hibernateUserDaoImplementation.save(new Lead(1234, "batman2", "Bruce", "Wayne", "green"));
+//
 
         // TODO: 26.11.2021 uncomment for testing
 
@@ -30,17 +31,28 @@ public class HibernateUserDaoImplementation implements UserDao {
 //        System.out.println(new HibernateUserDaoImplementation().update(new Mentor(1233, "sup", "Clark", "Kent", "blue")));
 //        System.out.println(all.size());
 //        System.out.println(new HibernateUserDaoImplementation().findById("1233"));
-ыщь        Mentor byId = (Mentor) hibernateUserDaoImplementation.findById("2");
-//        Student studentById1 = (Student) hibernateUserDaoImplementation.findById("3");
-//        Student studentById2 = (Student) hibernateUserDaoImplementation.findById("4");
-//        Student studentById3 = (Student) hibernateUserDaoImplementation.findById("5");
-//        Student studentById4 = (Student) hibernateUserDaoImplementation.findById("6");
+       Mentor byId = (Mentor) hibernateUserDaoImplementation.findById("1235");
+//       Student studentById1 = (Student) hibernateUserDaoImplementation.findById("1233");
+//       Student studentById2 = (Student) hibernateUserDaoImplementation.findById("1234");
+////        Student studentById3 = (Student) hibernateUserDaoImplementation.findById("5");
+////        Student studentById4 = (Student) hibernateUserDaoImplementation.findById("6");
+//        byId.addStudent(studentById2);
 //        byId.addStudent(studentById1);
+//        //   byId.addStudent(studentById1);
+//        hibernateUserDaoImplementation.update(byId);
 //        byId.addStudent(studentById2);
 //        byId.addStudent(studentById3);
 //        byId.addStudent(studentById4);
-        System.out.println(byId.getStudents().size());
-//        hibernateUserDaoImplementation.delete(byId);
+//            studentById1.addMentor(byId);
+////            hibernateUserDaoImplementation.update(studentById1);
+//        System.out.println(studentById1.getMentors().size());
+//        System.out.println(studentById1.getId());
+//        System.out.println(studentById1.getFirstName());
+//        System.out.println(studentById1.getLastName());
+//        System.out.println(studentById1.getUsername());
+//        System.out.println(studentById1.getGroup());
+//        System.out.println(byId.getStudents().size());
+        hibernateUserDaoImplementation.delete(byId);
 
 
     }
