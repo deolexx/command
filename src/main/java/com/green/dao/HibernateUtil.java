@@ -52,20 +52,19 @@ public class HibernateUtil {
         throw new Exception();
     }
 
-    public static SessionFactory getSessionFactory(String propertiesPath) throws Exception {
-        FileInputStream input = new FileInputStream(propertiesPath);
+    public static SessionFactory getSessionFactory(String url, String user, String password) throws Exception {
 
         try {
             Configuration configuration = new Configuration();
 
             // Hibernate settings equivalent to hibernate.cfg.xml's properties
             Properties settings = new Properties();
-            settings.load(input);
+
 
             settings.put(Environment.DRIVER, "org.postgresql.Driver");
-            settings.put(Environment.URL, settings.getProperty("url"));
-            settings.put(Environment.USER, settings.getProperty("user"));
-            settings.put(Environment.PASS, settings.getProperty("password"));
+            settings.put(Environment.URL, url);
+            settings.put(Environment.USER, user);
+            settings.put(Environment.PASS, password);
             settings.put(Environment.DIALECT, "org.hibernate.dialect.PostgreSQL95Dialect");
 //
             settings.put(Environment.SHOW_SQL, "true");
