@@ -141,7 +141,19 @@ public class HibernateUserDaoImplementation implements UserDao {
 
     @Override
     public List<User> findByRole(String role) {
-        return null;
+        List<User> users;
+        Transaction transaction;
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            transaction = session.beginTransaction();
+            CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
+            CriteriaQuery<User> criteriaQuery = criteriaBuilder.createQuery(User.class);
+            Root<User> root = criteriaQuery.from(User.class);
+            criteriaQuery.select(root);
+            criteriaQuery.where(criteriaBuilder.equal(root.get("role"), role));
+            users = session.createQuery(criteriaQuery).getResultList();
+            transaction.commit();
+        }
+        return users;
     }
 
     @Override
@@ -170,7 +182,21 @@ public class HibernateUserDaoImplementation implements UserDao {
 
     @Override
     public boolean userIsAdmin(int userId) {
-        return false;
+        boolean rowInserted = false;
+        Transaction transaction = null;
+        User userFromDb = null;
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            transaction = session.beginTransaction();
+            userFromDb = session.get(User.class, userId);
+            transaction.commit();
+            if(userFromDb.getRole()=="mentor")
+            rowInserted = true;
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+        }
+        return rowInserted;
     }
 
     @Override

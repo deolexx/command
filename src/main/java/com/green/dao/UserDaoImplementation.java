@@ -168,6 +168,7 @@ public class UserDaoImplementation implements UserDao {
     }
 
     @Override
+    @Deprecated
     public List<User> findByRole(String userRole) {
         List<User> users = new ArrayList<>();
         try (Connection connection = ds.getConnection()) {
