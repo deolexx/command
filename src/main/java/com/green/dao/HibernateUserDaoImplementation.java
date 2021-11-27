@@ -30,10 +30,16 @@ public class HibernateUserDaoImplementation implements UserDao {
 //        System.out.println(new HibernateUserDaoImplementation().update(new Mentor(1233, "sup", "Clark", "Kent", "blue")));
 //        System.out.println(all.size());
 //        System.out.println(new HibernateUserDaoImplementation().findById("1233"));
-//        Mentor byId = (Mentor) hibernateUserDaoImplementation.findById("1235");
-//        Student studentById = (Student) hibernateUserDaoImplementation.findById("1233");
-//        byId.addStudent(studentById);
-//        System.out.println(byId.getStudents().size());
+ыщь        Mentor byId = (Mentor) hibernateUserDaoImplementation.findById("2");
+//        Student studentById1 = (Student) hibernateUserDaoImplementation.findById("3");
+//        Student studentById2 = (Student) hibernateUserDaoImplementation.findById("4");
+//        Student studentById3 = (Student) hibernateUserDaoImplementation.findById("5");
+//        Student studentById4 = (Student) hibernateUserDaoImplementation.findById("6");
+//        byId.addStudent(studentById1);
+//        byId.addStudent(studentById2);
+//        byId.addStudent(studentById3);
+//        byId.addStudent(studentById4);
+        System.out.println(byId.getStudents().size());
 //        hibernateUserDaoImplementation.delete(byId);
 
 
