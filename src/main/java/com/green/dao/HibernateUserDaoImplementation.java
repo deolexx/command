@@ -4,7 +4,9 @@ import com.green.entity.User;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import java.util.List;
 
 public class HibernateUserDaoImplementation implements UserDao {
@@ -122,7 +124,19 @@ public class HibernateUserDaoImplementation implements UserDao {
 
     @Override
     public List<User> findByGroup(String group) {
-        return null;
+        List<User> users;
+        Transaction transaction;
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            transaction = session.beginTransaction();
+            CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
+            CriteriaQuery<User> criteriaQuery = criteriaBuilder.createQuery(User.class);
+            Root<User> root = criteriaQuery.from(User.class);
+            criteriaQuery.select(root);
+            criteriaQuery.where(criteriaBuilder.equal(root.get("group"), group));
+            users = session.createQuery(criteriaQuery).getResultList();
+            transaction.commit();
+        }
+        return users;
     }
 
     @Override
@@ -132,7 +146,20 @@ public class HibernateUserDaoImplementation implements UserDao {
 
     @Override
     public List<User> findByRoleAndGroup(String role, String group) {
-        return null;
+        List<User> users;
+        Transaction transaction;
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            transaction = session.beginTransaction();
+            CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
+            CriteriaQuery<User> criteriaQuery = criteriaBuilder.createQuery(User.class);
+            Root<User> root = criteriaQuery.from(User.class);
+            criteriaQuery.select(root);
+            criteriaQuery.where(criteriaBuilder.equal(root.get("group"), group));
+            criteriaQuery.where(criteriaBuilder.equal(root.get("role"), role));
+            users = session.createQuery(criteriaQuery).getResultList();
+            transaction.commit();
+        }
+        return users;
     }
 
 

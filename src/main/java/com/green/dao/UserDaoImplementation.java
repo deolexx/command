@@ -135,6 +135,7 @@ public class UserDaoImplementation implements UserDao {
     }
 
     @Override
+    @Deprecated
     public List<User> findByGroup(String userGroup) {
         List<User> users = new ArrayList<>();
         try (Connection connection = ds.getConnection()) {
@@ -197,6 +198,7 @@ public class UserDaoImplementation implements UserDao {
     }
 
     @Override
+    @Deprecated
     public List<User> findByRoleAndGroup(String userRole, String userGroup) {
         List<User> users = new ArrayList<>();
         try (Connection connection = ds.getConnection()) {
