@@ -34,8 +34,8 @@ class HibernateUserDaoImplementationTest {
                 .withDatabaseName(databaseName)
                 .withUsername(userName)
                 .withPassword(password)
-                .withConnectTimeoutSeconds(1000);
-//                .withInitScript("test-table.sql");
+                .withConnectTimeoutSeconds(1000)
+                .withInitScript("test-table.sql");
         postgreSQLContainer.start();
 
 
