@@ -14,22 +14,10 @@ import java.util.Set;
 @DiscriminatorValue("mentor")
 public class Mentor extends User {
 
-//    public int getMentor_id() {
-//        return mentor_id;
-//    }
-//
-//    public void setMentor_id(int mentor_id) {
-//        this.mentor_id = mentor_id;
-//    }
-//
-//    @Column(name = "mentor_id")
-//    int mentor_id;
 
     // TODO: 25.11.21 Still need to create unique fields for Mentor class
     public Mentor() {
     }
-
-
 
     public Mentor(int id, String username, String firstName, String lastName, String group) {
         super(id, username, firstName, lastName, group);

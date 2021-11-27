@@ -326,11 +326,5 @@ public class UserDaoImplementation implements UserDao {
         return rowUpdated;
     }
 
-
-    public static void main(String[] args) {
-
-    }
-
-
 }
 
