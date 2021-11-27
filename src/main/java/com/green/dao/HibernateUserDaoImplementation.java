@@ -4,39 +4,21 @@ import com.green.entity.Mentor;
 import com.green.entity.Student;
 import com.green.entity.User;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
 import javax.persistence.criteria.CriteriaQuery;
 import java.util.List;
 
 public class HibernateUserDaoImplementation implements UserDao {
+    private SessionFactory sessionFactory;
 
+    public HibernateUserDaoImplementation(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
 
-    // TODO: 24.11.21 FOR TEST CASES
-    public static void main(String[] args) {
-        HibernateUserDaoImplementation hibernateUserDaoImplementation = new HibernateUserDaoImplementation();
-
-        // TODO: 26.11.2021 uncomment to add 3 test users to user table int commandnew schema
-//        hibernateUserDaoImplementation.save(new Student(1233, "batman", "Bruce", "Wayne", "green"));
-//       hibernateUserDaoImplementation.save(new Mentor(1235, "batman3", "Bruce", "Wayne", "green"));
-//       hibernateUserDaoImplementation.save(new Lead(1234, "batman2", "Bruce", "Wayne", "green"));
-
-
-        // TODO: 26.11.2021 uncomment for testing
-
-//        User byId = new HibernateUserDaoImplementation().findById("2");
-//        List<User> all = new HibernateUserDaoImplementation().findAll();
-//        System.out.println(new HibernateUserDaoImplementation().delete(new Lead(1234, "batman2", "Bruce", "Wayne", "green")));
-//        System.out.println(new HibernateUserDaoImplementation().update(new Mentor(1233, "sup", "Clark", "Kent", "blue")));
-//        System.out.println(all.size());
-//        System.out.println(new HibernateUserDaoImplementation().findById("1233"));
-//        Mentor byId = (Mentor) hibernateUserDaoImplementation.findById("1235");
-//        Student studentById = (Student) hibernateUserDaoImplementation.findById("1233");
-//        byId.addStudent(studentById);
-//        System.out.println(byId.getStudents().size());
-//        hibernateUserDaoImplementation.delete(byId);
-
-
+    public HibernateUserDaoImplementation() throws Exception {
+        this.sessionFactory = HibernateUtil.getSessionFactory();
     }
 
 
@@ -44,7 +26,7 @@ public class HibernateUserDaoImplementation implements UserDao {
     public List<User> findAll() {
         List<User> users;
         Transaction transaction;
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+        try (Session session = sessionFactory.openSession()) {
             transaction = session.beginTransaction();
             CriteriaQuery<User> criteriaQuery = session.getCriteriaBuilder().createQuery(User.class);
             criteriaQuery.from(User.class);
@@ -58,7 +40,7 @@ public class HibernateUserDaoImplementation implements UserDao {
     public boolean save(User o) {
         boolean rowInserted = false;
         Transaction transaction = null;
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+        try (Session session = sessionFactory.openSession()) {
             transaction = session.beginTransaction();
             session.save(o);
             transaction.commit();
@@ -76,7 +58,7 @@ public class HibernateUserDaoImplementation implements UserDao {
     public boolean delete(User o) {
         boolean rowInserted = false;
         Transaction transaction = null;
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+        try (Session session = sessionFactory.openSession()) {
             transaction = session.beginTransaction();
             session.delete(o);
             transaction.commit();
@@ -94,7 +76,7 @@ public class HibernateUserDaoImplementation implements UserDao {
         boolean rowInserted = false;
         Transaction transaction = null;
         User userFromDb = null;
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+        try (Session session = sessionFactory.openSession()) {
             transaction = session.beginTransaction();
             userFromDb = session.get(User.class, userId);
             session.delete(userFromDb);
@@ -112,7 +94,7 @@ public class HibernateUserDaoImplementation implements UserDao {
     public boolean update(User o) {
         boolean rowInserted = false;
         Transaction transaction = null;
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+        try (Session session = sessionFactory.openSession()) {
             transaction = session.beginTransaction();
             session.saveOrUpdate(o);
             transaction.commit();
@@ -131,7 +113,7 @@ public class HibernateUserDaoImplementation implements UserDao {
         Transaction transaction = null;
         User userFromDb = null;
         // auto close session object
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+        try (Session session = sessionFactory.openSession()) {
             // start the transaction
             transaction = session.beginTransaction();
             // find user object by id
