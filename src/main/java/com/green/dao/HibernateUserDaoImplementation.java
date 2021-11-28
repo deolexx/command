@@ -19,15 +19,19 @@ public class HibernateUserDaoImplementation implements UserDao {
 
 
     private  SessionFactory sessionFactory;
-
-
-    public HibernateUserDaoImplementation(SessionFactory sessionFactory) {
+    @Autowired
+    public void setSessionFactory(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
 
-    public HibernateUserDaoImplementation() throws Exception {
-        this.sessionFactory = HibernateUtil.sessionFactory();
-    }
+
+//    public HibernateUserDaoImplementation(SessionFactory sessionFactory) {
+//        this.sessionFactory = sessionFactory;
+//    }
+//
+//    public HibernateUserDaoImplementation() throws Exception {
+//        this.sessionFactory = HibernateUtil.sessionFactory();
+//    }
 
 
     @Override

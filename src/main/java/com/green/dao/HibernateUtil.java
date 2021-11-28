@@ -16,8 +16,8 @@ import org.springframework.stereotype.Service;
 import java.util.Properties;
 
 
-@ComponentScan
-@Service
+@ComponentScan(basePackages = "com.green")
+@org.springframework.context.annotation.Configuration
 public class HibernateUtil {
 
     @Bean
