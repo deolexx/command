@@ -16,11 +16,11 @@ import org.springframework.stereotype.Service;
 import java.util.Properties;
 
 
-@ComponentScan(basePackages = "com.green")
-@org.springframework.context.annotation.Configuration
+//@ComponentScan(basePackages = "com.green")
+//@org.springframework.context.annotation.Configuration
 public class HibernateUtil {
 
-    @Bean
+//    @Bean
     public static SessionFactory sessionFactory() throws Exception {
 
         try {
