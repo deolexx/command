@@ -48,7 +48,7 @@ class HibernateUserDaoImplementationTest {
 
         sessionFactory = HibernateUtil.getSessionFactory(jdbcUrl, userName, password);
         assertNotNull(sessionFactory);
-        hibernateUserDao = new HibernateUserDaoImplementation(sessionFactory);
+        hibernateUserDao = new HibernateUserDaoImplementation();
     }
 
     @Test

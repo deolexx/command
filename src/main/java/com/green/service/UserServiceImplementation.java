@@ -1,6 +1,5 @@
 package com.green.service;
 
-import com.green.dao.HibernateUserDaoImplementation;
 import com.green.dao.UserDaoImplementation;
 import com.green.entity.User;
 
@@ -12,8 +11,7 @@ import java.util.List;
 public class UserServiceImplementation implements UserService {
     
     private static final UserDaoImplementation userDaoImplementation = new UserDaoImplementation();
-    // TODO: 25.11.21 uncomment following line when all necessary methods is ready
-//    private static final HibernateUserDaoImplementation userDaoImplementation = new HibernateUserDaoImplementation();
+
 
     public UserServiceImplementation() {
     }

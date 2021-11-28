@@ -9,12 +9,19 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.cfg.Environment;
 import org.hibernate.service.ServiceRegistry;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.stereotype.Service;
 
 import java.util.Properties;
 
 
+@ComponentScan
+@Service
 public class HibernateUtil {
-    public static SessionFactory getSessionFactory() throws Exception {
+
+    @Bean
+    public static SessionFactory sessionFactory() throws Exception {
 
         try {
             Configuration configuration = new Configuration();
