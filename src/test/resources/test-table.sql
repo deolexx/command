@@ -10,3 +10,4 @@ create table command.user
     user_role  varchar(20),
     user_group varchar(50)
 );
+

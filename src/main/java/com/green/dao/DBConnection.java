@@ -3,7 +3,9 @@ package com.green.dao;
 import org.apache.commons.dbcp2.BasicDataSource;
 
 import javax.sql.DataSource;
-
+/*
+Deprecated class for direct database connection
+ */
 public class DBConnection {
 
 

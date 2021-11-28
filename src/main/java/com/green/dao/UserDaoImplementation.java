@@ -11,8 +11,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-
+/*
+Deprecated class for JDBC
+use HibernateUserDaoImplementation instead
+ */
 public class UserDaoImplementation implements UserDao {
+
     private static final String DELETE = "DELETE FROM command.user WHERE user_id = ?";
     private static final String SAVE = "INSERT INTO command.user (user_id,username,first_name,last_name,user_role,user_group) VALUES ( ?, ?, ?, ?, ?, ? )";
     private static final String UPDATE = "UPDATE command.user SET user_role = ?, user_group = ? WHERE user_id = ?";

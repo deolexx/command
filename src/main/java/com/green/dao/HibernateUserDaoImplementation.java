@@ -9,6 +9,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import java.util.List;
+import java.util.Objects;
 
 public class HibernateUserDaoImplementation implements UserDao {
     private SessionFactory sessionFactory;
@@ -197,12 +198,12 @@ public class HibernateUserDaoImplementation implements UserDao {
         boolean rowInserted = false;
         Transaction transaction = null;
         User userFromDb = null;
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+        try (Session session = sessionFactory.openSession()) {
             transaction = session.beginTransaction();
             userFromDb = session.get(User.class, userId);
             transaction.commit();
-            if(userFromDb.getRole()=="mentor")
-            rowInserted = true;
+            if (Objects.equals(userFromDb.getRole(), "mentor"))
+                rowInserted = true;
         } catch (Exception e) {
             if (transaction != null) {
                 transaction.rollback();

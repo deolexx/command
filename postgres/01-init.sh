@@ -13,17 +13,22 @@ psql --username admin --dbname postgres <<-EOSQL
      user_role varchar(20),
      user_group varchar(50)
      );
-  INSERT INTO command.user (
-  user_id,
-  username,
-  first_name,
-  last_name,
-  user_role,
-  user_group
-  )
-  VALUES
-  (1,'rocky','Silvester','Stallone','user','green'),
-  (2,'invincible','Chuck','Norris','lead','green'),
-  (3,'terminator','Arnold','Schwarzenegger','admin','');
+create table command.mentor_student
+(
+	mentor_id integer not null
+		constraint fkgt4pp0cudpkjggg3g62m7vabo
+			references command."user",
+	student_id integer not null
+		constraint fknx31pdrht7qlg5uth68l5sdp9
+			references command."user",
+	constraint mentor_student_pkey
+		primary key (mentor_id, student_id)
+);
+
+alter table command.mentor_student owner to admin;
+
+
+
+
   COMMIT;
 EOSQL

@@ -1,8 +1,5 @@
 package com.green.dao;
 
-import java.io.FileInputStream;
-import java.util.Properties;
-
 import com.green.entity.Lead;
 import com.green.entity.Mentor;
 import com.green.entity.Student;
@@ -12,6 +9,8 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.cfg.Environment;
 import org.hibernate.service.ServiceRegistry;
+
+import java.util.Properties;
 
 
 public class HibernateUtil {
