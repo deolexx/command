@@ -2,6 +2,7 @@ package com.green.dao;
 
 import com.green.entity.User;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
 import javax.persistence.criteria.CriteriaBuilder;
@@ -10,11 +11,22 @@ import javax.persistence.criteria.Root;
 import java.util.List;
 
 public class HibernateUserDaoImplementation implements UserDao {
+    private SessionFactory sessionFactory;
+
+    public HibernateUserDaoImplementation(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
+
+    public HibernateUserDaoImplementation() throws Exception {
+        this.sessionFactory = HibernateUtil.getSessionFactory();
+    }
+
+
     @Override
     public List<User> findAll() {
         List<User> users;
         Transaction transaction;
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+        try (Session session = sessionFactory.openSession()) {
             transaction = session.beginTransaction();
             CriteriaQuery<User> criteriaQuery = session.getCriteriaBuilder().createQuery(User.class);
             criteriaQuery.from(User.class);
@@ -28,7 +40,7 @@ public class HibernateUserDaoImplementation implements UserDao {
     public boolean save(User o) {
         boolean rowInserted = false;
         Transaction transaction = null;
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+        try (Session session = sessionFactory.openSession()) {
             transaction = session.beginTransaction();
             session.save(o);
             transaction.commit();
@@ -46,7 +58,7 @@ public class HibernateUserDaoImplementation implements UserDao {
     public boolean delete(User o) {
         boolean rowInserted = false;
         Transaction transaction = null;
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+        try (Session session = sessionFactory.openSession()) {
             transaction = session.beginTransaction();
             session.delete(o);
             transaction.commit();
@@ -64,7 +76,7 @@ public class HibernateUserDaoImplementation implements UserDao {
         boolean rowInserted = false;
         Transaction transaction = null;
         User userFromDb = null;
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+        try (Session session = sessionFactory.openSession()) {
             transaction = session.beginTransaction();
             userFromDb = session.get(User.class, userId);
             session.delete(userFromDb);
@@ -82,7 +94,7 @@ public class HibernateUserDaoImplementation implements UserDao {
     public boolean update(User o) {
         boolean rowInserted = false;
         Transaction transaction = null;
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+        try (Session session = sessionFactory.openSession()) {
             transaction = session.beginTransaction();
             session.saveOrUpdate(o);
             transaction.commit();
@@ -101,7 +113,7 @@ public class HibernateUserDaoImplementation implements UserDao {
         Transaction transaction = null;
         User userFromDb = null;
         // auto close session object
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+        try (Session session = sessionFactory.openSession()) {
             // start the transaction
             transaction = session.beginTransaction();
             // find user object by id
@@ -126,7 +138,7 @@ public class HibernateUserDaoImplementation implements UserDao {
     public List<User> findByGroup(String group) {
         List<User> users;
         Transaction transaction;
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+        try (Session session = sessionFactory.openSession()) {
             transaction = session.beginTransaction();
             CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
             CriteriaQuery<User> criteriaQuery = criteriaBuilder.createQuery(User.class);
@@ -143,7 +155,7 @@ public class HibernateUserDaoImplementation implements UserDao {
     public List<User> findByRole(String role) {
         List<User> users;
         Transaction transaction;
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+        try (Session session = sessionFactory.openSession()) {
             transaction = session.beginTransaction();
             CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
             CriteriaQuery<User> criteriaQuery = criteriaBuilder.createQuery(User.class);
@@ -160,7 +172,7 @@ public class HibernateUserDaoImplementation implements UserDao {
     public List<User> findByRoleAndGroup(String role, String group) {
         List<User> users;
         Transaction transaction;
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+        try (Session session = sessionFactory.openSession()) {
             transaction = session.beginTransaction();
             CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
             CriteriaQuery<User> criteriaQuery = criteriaBuilder.createQuery(User.class);
