@@ -1,89 +1,94 @@
 package com.green.service;
 
-import com.green.dao.UserDaoImplementation;
+import com.green.dao.HibernateUserDaoImplementation;
 import com.green.entity.User;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import javax.jws.WebMethod;
 import javax.jws.WebService;
 import java.util.List;
 
 @WebService(endpointInterface = "com.green.service.UserService")
+@Component
 public class UserServiceImplementation implements UserService {
-    
-    private static final UserDaoImplementation userDaoImplementation = new UserDaoImplementation();
 
 
-    public UserServiceImplementation() {
+    private HibernateUserDaoImplementation hibernateUserDaoImplementation;
+
+    @Autowired
+    public void setHibernateUserDaoImplementation(HibernateUserDaoImplementation hibernateUserDaoImplementation) {
+        this.hibernateUserDaoImplementation = hibernateUserDaoImplementation;
     }
 
     @Override
     @WebMethod
     public boolean save(User user) {
-        return userDaoImplementation.save(user);
+        return hibernateUserDaoImplementation.save(user);
     }
 
     @Override
     public List<User> findByGroup(String group) {
-        return userDaoImplementation.findByGroup(group);
+        return hibernateUserDaoImplementation.findByGroup(group);
     }
 
     @Override
     @WebMethod
     public List<User> findAll() {
-        return userDaoImplementation.findAll();
+        return hibernateUserDaoImplementation.findAll();
     }
 
     @Override
     @WebMethod
     public boolean update(User user) {
-        return userDaoImplementation.update(user);
+        return hibernateUserDaoImplementation.update(user);
     }
 
     @Override
     @WebMethod
     public boolean delete(User user) {
-        return userDaoImplementation.delete(user);
+        return hibernateUserDaoImplementation.delete(user);
     }
 
     @Override
     public boolean deleteById(int userId) {
-        return userDaoImplementation.deleteById(userId);
+        return hibernateUserDaoImplementation.deleteById(userId);
     }
 
     @Override
     public boolean userExistsInDb(int userId) {
-        return userDaoImplementation.userExistsInDb(userId);
+        return hibernateUserDaoImplementation.userExistsInDb(userId);
     }
 
     @Override
     @WebMethod
     public List<User> findByRole(String role) {
-        return userDaoImplementation.findByRole(role);
+        return hibernateUserDaoImplementation.findByRole(role);
     }
 
     @Override
     public List<User> findByRoleAndGroup(String role, String group) {
-        return userDaoImplementation.findByRoleAndGroup(role, group);
+        return hibernateUserDaoImplementation.findByRoleAndGroup(role, group);
     }
 
     @Override
     public User findById(String id) {
-        return userDaoImplementation.findById(id);
+        return hibernateUserDaoImplementation.findById(id);
     }
 
     @Override
     public boolean saveUserByFields(int userId, String userUsername, String userFirstName, String userLastName, String userGroup, String userRole) {
-        return userDaoImplementation.saveUserByFields(userId, userUsername, userFirstName, userLastName, userGroup, userRole);
+        return hibernateUserDaoImplementation.saveUserByFields(userId, userUsername, userFirstName, userLastName, userGroup, userRole);
     }
 
     @Override
     public boolean userIsAdmin(int userId) {
-        return userDaoImplementation.userIsAdmin(userId);
+        return hibernateUserDaoImplementation.userIsAdmin(userId);
     }
 
     @Override
     public boolean updateGroup(int userId, String userGroup) {
-        return userDaoImplementation.updateGroup(userId, userGroup);
+        return hibernateUserDaoImplementation.updateGroup(userId, userGroup);
     }
 
 

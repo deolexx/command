@@ -10,8 +10,7 @@ import java.util.Objects;
 
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
-// TODO: 26.11.2021 change schema back to command when everything tested
-@Table(schema = "commandnew", name = "user")
+@Table(schema = "command", name = "user")
 @Entity(name = "user")
 @DiscriminatorColumn(name = "user_role")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)

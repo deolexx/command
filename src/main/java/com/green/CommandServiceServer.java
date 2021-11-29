@@ -1,21 +1,33 @@
 package com.green;
 
+import com.green.dao.HibernateConfig;
 import com.green.service.UserServiceImplementation;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.stereotype.Component;
 
 import javax.xml.ws.Endpoint;
-import java.sql.SQLException;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 
+@Component
 public class CommandServiceServer {
     private static final Logger LOGGER = Logger.getGlobal();
 
+    static UserServiceImplementation userServiceImplementation;
+
+    @Autowired
+    public void setUserServiceImplementation(UserServiceImplementation userServiceImplementation) {
+        CommandServiceServer.userServiceImplementation = userServiceImplementation;
+    }
+
+
     public static void main(String[] args) {
-
-
-        Endpoint.publish("http://0.0.0.0:8081/command", new UserServiceImplementation());
+        AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext(HibernateConfig.class);
+        // TODO: 29.11.2021 change localhost to 0.0.0.0 before image creating 
+        Endpoint.publish("http://localhost:8081/command", userServiceImplementation);
         LOGGER.info("Creating WEB server and publish SOAP endpoint");
 
         Runnable helloRunnable = new Runnable() {
@@ -25,7 +37,7 @@ public class CommandServiceServer {
         };
 
         ScheduledExecutorService executor = Executors.newScheduledThreadPool(1);
-        executor.scheduleAtFixedRate(helloRunnable, 0, 15 , TimeUnit.SECONDS);
+        executor.scheduleAtFixedRate(helloRunnable, 0, 15, TimeUnit.SECONDS);
 
     }
 
