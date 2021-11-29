@@ -14,7 +14,6 @@ import java.util.Set;
 @DiscriminatorValue("mentor")
 public class Mentor extends User {
 
-
     // TODO: 25.11.21 Still need to create unique fields for Mentor class
     public Mentor() {
     }

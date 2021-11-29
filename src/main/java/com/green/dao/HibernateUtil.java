@@ -9,24 +9,20 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.cfg.Environment;
 import org.hibernate.service.ServiceRegistry;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.stereotype.Service;
 
 import java.util.Properties;
 
 
-//@ComponentScan(basePackages = "com.green")
-//@org.springframework.context.annotation.Configuration
+
 public class HibernateUtil {
 
-//    @Bean
+    @Deprecated
     public static SessionFactory sessionFactory() throws Exception {
 
         try {
             Configuration configuration = new Configuration();
 
-            // Hibernate settings equivalent to hibernate.cfg.xml's properties
+
             Properties settings = new Properties();
             settings.put(Environment.DRIVER, "org.postgresql.Driver");
             settings.put(Environment.URL, "jdbc:postgresql://3.13.111.5:5432/tasktrack");
@@ -57,7 +53,7 @@ public class HibernateUtil {
         }
         throw new Exception();
     }
-
+    @Deprecated
     public static SessionFactory getSessionFactory(String url, String user, String password) throws Exception {
 
         try {
