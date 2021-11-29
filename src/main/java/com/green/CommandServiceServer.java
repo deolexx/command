@@ -26,8 +26,8 @@ public class CommandServiceServer {
 
     public static void main(String[] args) {
         AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext(HibernateConfig.class);
-        // TODO: 29.11.2021 change localhost to 0.0.0.0 before image creating 
-        Endpoint.publish("http://localhost:8081/command", userServiceImplementation);
+
+        Endpoint.publish("http://0.0.0.0:8081/command", userServiceImplementation);
         LOGGER.info("Creating WEB server and publish SOAP endpoint");
 
         Runnable helloRunnable = new Runnable() {

@@ -1,9 +1,11 @@
 package com.green.entity;
 
-import javax.persistence.*;
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.ManyToMany;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.HashSet;
 import java.util.Set;
@@ -14,7 +16,7 @@ import java.util.Set;
 @DiscriminatorValue("student")
 public class Student extends User {
 
-    // TODO: 25.11.21 Still need to create unique fields for Student class
+
     public Student() {
     }
 
@@ -29,7 +31,6 @@ public class Student extends User {
     private Set<Mentor> mentors = new HashSet<>();
 
 
-    // TODO: 26.11.2021  @Xml annotation?
     /*
     Additional method for add Student to the students Set
      */
