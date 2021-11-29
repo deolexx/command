@@ -1,6 +1,9 @@
 package com.green.service;
 
 import com.green.dao.HibernateUserDaoImplementation;
+import com.green.entity.Lead;
+import com.green.entity.Mentor;
+import com.green.entity.Student;
 import com.green.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -25,6 +28,11 @@ public class UserServiceImplementation implements UserService {
     @WebMethod
     public boolean save(User user) {
         return hibernateUserDaoImplementation.save(user);
+    }
+
+    @WebMethod
+    public void soapEntityNotify(Student student, Mentor mentor, Lead lead) {
+         hibernateUserDaoImplementation.soapEntityNotify(student,mentor,lead);
     }
 
     @Override

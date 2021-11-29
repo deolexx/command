@@ -1,5 +1,8 @@
 package com.green.service;
 
+import com.green.entity.Lead;
+import com.green.entity.Mentor;
+import com.green.entity.Student;
 import com.green.entity.User;
 
 import javax.jws.WebMethod;
@@ -12,6 +15,9 @@ public interface UserService {
 
     @WebMethod
     boolean save(User user);
+
+    @WebMethod
+    void soapEntityNotify(Student student, Mentor mentor, Lead lead);
 
     @WebMethod
     List<User> findByGroup(String string);

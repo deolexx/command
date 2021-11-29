@@ -1,9 +1,6 @@
 package com.green.entity;
 
-import javax.persistence.DiscriminatorValue;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.ManyToMany;
+import javax.persistence.*;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -12,7 +9,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @XmlRootElement
-@XmlAccessorType(XmlAccessType.FIELD)
+@XmlAccessorType(XmlAccessType.NONE)
 @Entity
 @DiscriminatorValue("student")
 public class Student extends User {
@@ -27,7 +24,7 @@ public class Student extends User {
 
 
     // fetch = FetchType.EAGER  added to avoid LazyInitializationException
-    @XmlElement
+
     @ManyToMany(fetch = FetchType.EAGER, mappedBy = "students")
     private Set<Mentor> mentors = new HashSet<>();
 

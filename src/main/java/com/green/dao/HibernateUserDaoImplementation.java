@@ -1,5 +1,8 @@
 package com.green.dao;
 
+import com.green.entity.Lead;
+import com.green.entity.Mentor;
+import com.green.entity.Student;
 import com.green.entity.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -63,6 +66,12 @@ public class HibernateUserDaoImplementation implements UserDao {
             }
         }
         return rowInserted;
+    }
+
+    /*
+    Special method for SOAP
+     */
+    public void soapEntityNotify(Student o, Mentor m, Lead l) {
     }
 
 

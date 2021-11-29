@@ -9,7 +9,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @XmlRootElement
-@XmlAccessorType(XmlAccessType.FIELD)
+@XmlAccessorType(XmlAccessType.NONE)
 @Entity
 @DiscriminatorValue("mentor")
 public class Mentor extends User {
@@ -23,15 +23,10 @@ public class Mentor extends User {
         super(id, username, firstName, lastName, group);
     }
 
-    // TODO: 26.11.2021 now if we delete mentor
-    //  all mapped students also will be deleted
-    //  still need some tests
 
-    // fetch = FetchType.EAGER  added to avoid LazyInitializationException
-    // cascade = CascadeType.REMOVE added to delete mapped students when Mentor removed
     @XmlElement
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinTable(schema = "commandnew",
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
+    @JoinTable(schema = "command",
             name = "mentor_student",
             joinColumns = {@JoinColumn(name = "mentor_id")},
             inverseJoinColumns = {@JoinColumn(name = "student_id")}
@@ -39,7 +34,6 @@ public class Mentor extends User {
     private Set<Student> students = new HashSet<>();
 
 
-    // TODO: 26.11.2021  @Xml annotation?
     /*
     Additional method for add Student to the students Set
      */
