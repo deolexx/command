@@ -6,7 +6,7 @@
 
     <groupId>com.green</groupId>
     <artifactId>command</artifactId>
-    <version>0.0.3-SHAPSHOT</version>
+    <version>0.0.4-SHAPSHOT</version>
     <packaging>jar</packaging>
 
     <properties>

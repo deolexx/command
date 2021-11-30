@@ -10,7 +10,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlAccessorType(XmlAccessType.FIELD)
 @Entity
 @DiscriminatorValue("lead")
-public class Lead extends Student {
+public class Lead extends User {
 
 
     public Lead() {
