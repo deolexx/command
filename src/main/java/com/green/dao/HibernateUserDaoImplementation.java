@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import java.util.List;
 import java.util.Objects;
@@ -189,8 +190,10 @@ public class HibernateUserDaoImplementation implements UserDao {
             CriteriaQuery<User> criteriaQuery = criteriaBuilder.createQuery(User.class);
             Root<User> root = criteriaQuery.from(User.class);
             criteriaQuery.select(root);
-            criteriaQuery.where(criteriaBuilder.equal(root.get("group"), group));
-            criteriaQuery.where(criteriaBuilder.equal(root.get("role"), role));
+            Predicate studentgroup = criteriaBuilder.equal(root.get("group"), group);
+            Predicate studentrole = criteriaBuilder.equal(root.get("role"), role);
+            Predicate finalpredicate = criteriaBuilder.and(studentgroup, studentrole);
+            criteriaQuery.where(finalpredicate);
             users = session.createQuery(criteriaQuery).getResultList();
             transaction.commit();
         }
