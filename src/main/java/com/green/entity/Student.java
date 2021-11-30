@@ -25,23 +25,16 @@ public class Student extends User {
     }
 
 
-    // fetch = FetchType.EAGER  added to avoid LazyInitializationException
-
     @ManyToMany(fetch = FetchType.EAGER, mappedBy = "students")
     private Set<Mentor> mentors = new HashSet<>();
 
 
-    /*
-    Additional method for add Student to the students Set
-     */
     public void addMentor(Mentor mentor) {
         this.mentors.add(mentor);
         mentor.getStudents().add(this);
     }
 
-    /*
-    Additional method for removing Student from the students Se
-     */
+
     public void removeMentor(Mentor mentor) {
         this.mentors.remove(mentor);
         mentor.getStudents().remove(this);

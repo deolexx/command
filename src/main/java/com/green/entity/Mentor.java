@@ -32,18 +32,11 @@ public class Mentor extends User {
     )
     private Set<Student> students = new HashSet<>();
 
-
-    /*
-    Additional method for add Student to the students Set
-     */
     public void addStudent(Student student) {
         this.students.add(student);
         student.getMentors().add(this);
     }
 
-    /*
-    Additional method for removing Student from the students Se
-     */
     public void removeStudent(Student student) {
         this.students.remove(student);
         student.getMentors().remove(this);
